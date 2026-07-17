@@ -1,0 +1,8 @@
+Kidus,1200
+Sara,850
+Yared,450
+Kidus,500
+Marta,300
+Sara,200
+Kidus,100
+Dawit,1500

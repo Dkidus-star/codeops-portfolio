@@ -1,0 +1,7 @@
+Customer Summary
+-------------------------
+Kidus: 1800.0
+Dawit: 1500.0
+Sara: 1050.0
+Yared: 450.0
+Marta: 300.0
