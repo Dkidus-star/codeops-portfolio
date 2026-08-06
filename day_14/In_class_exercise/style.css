@@ -1,0 +1,357 @@
+/* ============================= */
+/* General Styles */
+/* ============================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: #f8f8f8;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* ============================= */
+/* Navigation Bar */
+/* ============================= */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background-color: #8b0000;
+  color: white;
+
+  padding: 18px 60px;
+
+  position: sticky;
+  top: 0;
+
+  z-index: 1000;
+}
+
+.logo h2 {
+  font-size: 28px;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 30px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.nav-links a:hover {
+  color: gold;
+}
+
+/* ============================= */
+/* Main Grid Layout */
+/* ============================= */
+
+.container {
+  display: grid;
+
+  grid-template-columns: 3fr 1fr;
+
+  grid-template-areas:
+    "hero hero"
+    "menu sidebar";
+
+  gap: 30px;
+
+  width: 90%;
+  margin: 40px auto;
+}
+
+/* ============================= */
+/* Hero Section */
+/* ============================= */
+
+.hero {
+  grid-area: hero;
+
+  background: linear-gradient(to right, #8b0000, #c0392b);
+
+  color: white;
+
+  text-align: center;
+
+  padding: 70px 30px;
+
+  border-radius: 12px;
+}
+
+.hero h1 {
+  font-size: 45px;
+
+  margin-bottom: 20px;
+}
+
+.hero p {
+  font-size: 18px;
+
+  max-width: 700px;
+
+  margin: auto;
+}
+
+.hero button {
+  margin-top: 30px;
+
+  padding: 15px 35px;
+
+  border: none;
+
+  background: gold;
+
+  color: black;
+
+  font-size: 17px;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  transition: 0.3s;
+}
+
+.hero button:hover {
+  background: orange;
+}
+
+/* ============================= */
+/* Menu Section */
+/* ============================= */
+
+.menu-section {
+  grid-area: menu;
+}
+
+.menu-section h2 {
+  margin-bottom: 25px;
+
+  font-size: 32px;
+}
+
+/* ============================= */
+/* Flexbox Cards */
+/* ============================= */
+
+.menu-container {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 25px;
+}
+
+.card {
+  background: white;
+
+  width: 300px;
+
+  border-radius: 12px;
+
+  overflow: hidden;
+
+  display: flex;
+
+  flex-direction: column;
+
+  position: relative;
+
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+}
+
+.card img {
+  width: 100%;
+
+  height: 220px;
+
+  object-fit: cover;
+}
+
+.card h3 {
+  margin: 20px;
+}
+
+.card p {
+  margin: 0 20px;
+
+  color: #666;
+}
+
+/* Price stays at bottom */
+
+.price {
+  margin-top: auto;
+
+  background: #8b0000;
+
+  color: white;
+
+  padding: 15px;
+
+  text-align: center;
+}
+
+/* ============================= */
+/* Popular Badge */
+/* ============================= */
+
+.badge {
+  position: absolute;
+
+  top: 15px;
+
+  right: 15px;
+
+  background: gold;
+
+  color: black;
+
+  padding: 8px 15px;
+
+  border-radius: 20px;
+
+  font-size: 14px;
+
+  font-weight: bold;
+}
+
+/* ============================= */
+/* Sidebar */
+/* ============================= */
+
+.sidebar {
+  grid-area: sidebar;
+
+  background: white;
+
+  padding: 25px;
+
+  border-radius: 12px;
+
+  height: fit-content;
+
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+}
+
+.sidebar h2 {
+  margin-bottom: 15px;
+
+  color: #8b0000;
+}
+
+.sidebar ul {
+  list-style: none;
+
+  margin-bottom: 25px;
+}
+
+.sidebar li {
+  margin-bottom: 10px;
+}
+
+/* ============================= */
+/* Footer */
+/* ============================= */
+
+footer {
+  background: #222;
+
+  color: white;
+
+  text-align: center;
+
+  padding: 30px;
+
+  margin-top: 50px;
+}
+
+/* ============================= */
+/* Responsive Design */
+/* ============================= */
+
+@media (max-width: 992px) {
+  .container {
+    grid-template-columns: 1fr;
+
+    grid-template-areas:
+      "hero"
+      "menu"
+      "sidebar";
+  }
+
+  .menu-container {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+
+    gap: 20px;
+
+    padding: 20px;
+  }
+
+  .nav-links {
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 15px;
+  }
+
+  .hero h1 {
+    font-size: 34px;
+  }
+
+  .hero p {
+    font-size: 16px;
+  }
+
+  .card {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 50px 20px;
+  }
+
+  .hero h1 {
+    font-size: 28px;
+  }
+
+  .menu-section h2 {
+    text-align: center;
+
+    font-size: 26px;
+  }
+
+  .logo h2 {
+    font-size: 22px;
+  }
+}
