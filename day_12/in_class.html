@@ -1,169 +1,154 @@
-<!DOCTYPE html>
+<!doctype html> `
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Habesha Eatery | Authentic Ethiopian Cuisine</title>
 
     <meta
-        name="description"
-        content="Enjoy authentic Ethiopian cuisine at Habesha Eatery. Reserve your table and explore our delicious menu."
-    >
+      name="description"
+      content="Enjoy authentic Ethiopian cuisine at Habesha Eatery. Reserve your table and explore our delicious menu."
+    />
 
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <!-- Header -->
     <header>
-        <h1>Habesha Eatery</h1>
-        <p>Authentic Ethiopian Cuisine</p>
+      <h1>Habesha Eatery</h1>
+      <p>Authentic Ethiopian Cuisine</p>
     </header>
 
     <main>
+      <!-- Hero Section -->
+      <section>
+        <h2>Welcome to Habesha Eatery</h2>
 
-        <!-- Hero Section -->
-        <section>
-            <h2>Welcome to Habesha Eatery</h2>
+        <img
+          src="assets/hero.jpg"
+          alt="Traditional Ethiopian dishes served with injera at Habesha Eatery."
+          loading="lazy"
+        />
 
-            <img
-                src="assets/hero.jpg"
-                alt="Traditional Ethiopian dishes served with injera at Habesha Eatery."
-                loading="lazy"
-            >
+        <p>
+          Taste the rich flavors of Ethiopia with our freshly prepared
+          traditional dishes, warm hospitality, and unforgettable dining
+          experience.
+        </p>
+      </section>
 
-            <p>
-                Taste the rich flavors of Ethiopia with our freshly prepared
-                traditional dishes, warm hospitality, and unforgettable dining
-                experience.
-            </p>
-        </section>
+      <!-- Reservation Form -->
+      <section>
+        <h2>Reserve a Table</h2>
 
-        <!-- Reservation Form -->
-        <section>
-            <h2>Reserve a Table</h2>
+        <form action="#" method="post">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" required />
 
-            <form action="#" method="post">
+          <label for="phone">Phone Number</label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            placeholder="09XXXXXXXX"
+            pattern="09[0-9]{8}"
+            required
+          />
 
-                <label for="name">Full Name</label>
-                <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    required
-                >
+          <label for="guests">Number of Guests</label>
+          <input
+            type="number"
+            id="guests"
+            name="guests"
+            min="1"
+            max="20"
+            required
+          />
 
-                <label for="phone">Phone Number</label>
-                <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    placeholder="09XXXXXXXX"
-                    pattern="09[0-9]{8}"
-                    required
-                >
+          <label for="date">Reservation Date</label>
+          <input type="date" id="date" name="date" required />
 
-                <label for="guests">Number of Guests</label>
-                <input
-                    type="number"
-                    id="guests"
-                    name="guests"
-                    min="1"
-                    max="20"
-                    required
-                >
+          <button type="submit">Book Now</button>
+        </form>
+      </section>
 
-                <label for="date">Reservation Date</label>
-                <input
-                    type="date"
-                    id="date"
-                    name="date"
-                    required
-                >
+      <!-- Menu -->
+      <section>
+        <h2>Our Menu</h2>
 
-                <button type="submit">Book Now</button>
+        <table>
+          <caption>
+            Popular Ethiopian Dishes
+          </caption>
 
-            </form>
-        </section>
+          <thead>
+            <tr>
+              <th>Dish</th>
+              <th>Description</th>
+              <th>ETB Price</th>
+            </tr>
+          </thead>
 
-        <!-- Menu -->
-        <section>
-            <h2>Our Menu</h2>
+          <tbody>
+            <tr>
+              <td>Doro Wat</td>
+              <td>Traditional spicy chicken stew served with injera.</td>
+              <td>350</td>
+            </tr>
 
-            <table>
-                <caption>Popular Ethiopian Dishes</caption>
+            <tr>
+              <td>Kitfo</td>
+              <td>Minced beef mixed with Ethiopian butter and spices.</td>
+              <td>420</td>
+            </tr>
 
-                <thead>
-                    <tr>
-                        <th>Dish</th>
-                        <th>Description</th>
-                        <th>ETB Price</th>
-                    </tr>
-                </thead>
+            <tr>
+              <td>Tibs</td>
+              <td>Sautéed beef with onions, peppers, and rosemary.</td>
+              <td>340</td>
+            </tr>
 
-                <tbody>
-                    <tr>
-                        <td>Doro Wat</td>
-                        <td>Traditional spicy chicken stew served with injera.</td>
-                        <td>350</td>
-                    </tr>
+            <tr>
+              <td>Shiro</td>
+              <td>Rich chickpea stew seasoned with Ethiopian spices.</td>
+              <td>220</td>
+            </tr>
 
-                    <tr>
-                        <td>Kitfo</td>
-                        <td>Minced beef mixed with Ethiopian butter and spices.</td>
-                        <td>420</td>
-                    </tr>
+            <tr>
+              <td>Beyaynetu</td>
+              <td>Vegetarian platter served with injera.</td>
+              <td>300</td>
+            </tr>
 
-                    <tr>
-                        <td>Tibs</td>
-                        <td>Sautéed beef with onions, peppers, and rosemary.</td>
-                        <td>340</td>
-                    </tr>
+            <tr>
+              <td>Firfir</td>
+              <td>Shredded injera cooked with spicy berbere sauce.</td>
+              <td>180</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
 
-                    <tr>
-                        <td>Shiro</td>
-                        <td>Rich chickpea stew seasoned with Ethiopian spices.</td>
-                        <td>220</td>
-                    </tr>
+      <!-- Location -->
+      <section>
+        <h2>Visit Us</h2>
 
-                    <tr>
-                        <td>Beyaynetu</td>
-                        <td>Vegetarian platter served with injera.</td>
-                        <td>300</td>
-                    </tr>
-
-                    <tr>
-                        <td>Firfir</td>
-                        <td>Shredded injera cooked with spicy berbere sauce.</td>
-                        <td>180</td>
-                    </tr>
-                </tbody>
-            </table>
-
-        </section>
-
-        <!-- Location -->
-        <section>
-            <h2>Visit Us</h2>
-
-            <iframe
-                title="Google Map showing Habesha Eatery location"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126834.24404975134!2d38.674699!3d9.005401!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x164b85cef5ab402d%3A0x8467b6b037f2f3d6!2sAddis%20Ababa!5e0!3m2!1sen!2set!4v1690000000000!5m2!1sen!2set"
-                width="100%"
-                height="400"
-                style="border:0;"
-                allowfullscreen=""
-                loading="lazy">
-            </iframe>
-
-        </section>
-
+        <iframe
+          title="Google Map showing Habesha Eatery location"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126834.24404975134!2d38.674699!3d9.005401!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x164b85cef5ab402d%3A0x8467b6b037f2f3d6!2sAddis%20Ababa!5e0!3m2!1sen!2set!4v1690000000000!5m2!1sen!2set"
+          width="100%"
+          height="400"
+          style="border: 0"
+          allowfullscreen=""
+          loading="lazy"
+        >
+        </iframe>
+      </section>
     </main>
 
     <footer>
-        <p>&copy; 2026 Habesha Eatery. All Rights Reserved.</p>
+      <p>&copy; 2026 Habesha Eatery. All Rights Reserved.</p>
     </footer>
-
-</body>
+  </body>
 </html>
