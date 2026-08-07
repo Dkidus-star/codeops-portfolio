@@ -1,0 +1,2 @@
+This project is inspired by the official Ethio Telecom homepage (https://www.ethiotelecom.et/). The goal was to recreate the overall layout and structure using modern CSS Grid and Flexbox techniques. Rather than copying the website exactly.
+CSS Grid is used to create the main page layout with named grid areas, while Flexbox is used inside components such as the top bar, navigation bar, toolbar, and footer.
