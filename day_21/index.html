@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Signup Form</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background: #f4f7fb;
+        margin: 0;
+        padding: 40px 20px;
+        color: #1f2937;
+      }
+
+      .container {
+        max-width: 500px;
+        margin: 0 auto;
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        margin-top: 0;
+        color: #1d4ed8;
+        text-align: center;
+      }
+
+      .description {
+        text-align: center;
+        color: #6b7280;
+        margin-bottom: 25px;
+      }
+
+      .signup-count {
+        background: #eff6ff;
+        padding: 12px;
+        border-radius: 8px;
+        text-align: center;
+        margin-bottom: 20px;
+        font-weight: bold;
+      }
+
+      .form-group {
+        margin-bottom: 18px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: bold;
+      }
+
+      input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        font-size: 16px;
+      }
+
+      input:focus {
+        outline: none;
+        border-color: #2563eb;
+      }
+
+      button {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 6px;
+        background: #2563eb;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background: #1d4ed8;
+      }
+
+      #message {
+        margin-top: 15px;
+        padding: 12px;
+        border-radius: 6px;
+        display: none;
+      }
+
+      #message.error {
+        display: block;
+        background: #fee2e2;
+        color: #b91c1c;
+      }
+
+      #message.success {
+        display: block;
+        background: #dcfce7;
+        color: #15803d;
+      }
+
+      .saved-users {
+        margin-top: 30px;
+      }
+
+      .saved-users h2 {
+        font-size: 20px;
+      }
+
+      #userList {
+        padding-left: 20px;
+      }
+
+      #userList li {
+        margin-bottom: 8px;
+      }
+      .top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+      }
+
+      #themeToggle {
+        width: auto;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 6px;
+        background: #374151;
+        color: white;
+        cursor: pointer;
+      }
+
+      body {
+        transition:
+          background-color 0.3s,
+          color 0.3s;
+      }
+
+      body.dark {
+        background: #111827;
+        color: #f9fafb;
+      }
+
+      body.dark .container {
+        background: #1f2937;
+      }
+    </style>
+  </head>
+
+  <body>
+    <main class="container">
+      <div class="top-bar">
+        <h1>Signup Form</h1>
+
+        <button id="themeToggle" type="button">🌙 Dark Mode</button>
+      </div>
+
+      <p class="description">
+        Register with your name and Ethiopian phone number.
+      </p>
+
+      <div class="signup-count">
+        People signed up: <span id="signupCount">0</span>
+      </div>
+
+      <form id="signupForm" novalidate>
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Enter your full name"
+            autocomplete="name"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Ethiopian Phone Number</label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            placeholder="+251912345678"
+            autocomplete="tel"
+          />
+        </div>
+
+        <button type="submit">Sign Up</button>
+
+        <div id="message" role="alert"></div>
+      </form>
+
+      <section class="saved-users">
+        <h2>Registered Users</h2>
+        <ul id="userList"></ul>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,56 @@
+EXPECTED BEHAVIOUR
+
+1. When the page loads:
+   - The signup form is displayed.
+   - Previously saved signups are restored from localStorage.
+   - The number of saved people is displayed.
+
+2. Empty name:
+   - Submit the form without entering a name.
+   - An error message should appear:
+     "Please enter your name."
+
+3. Invalid Ethiopian phone:
+   - Enter an invalid phone number such as:
+     123456
+   - An error message should appear explaining that the phone number is invalid.
+
+4. Valid Ethiopian phone:
+   - Example:
+     +251912345678
+   - The form should submit successfully.
+   - A success message should appear.
+   - The signup should be saved in localStorage.
+   - The form should be cleared.
+   - The signup count should increase.
+   - The new user should appear in the registered users list.
+
+5. Refresh the page:
+   - Previously saved users should still be displayed.
+   - The signup count should remain correct.
+
+6. localStorage:
+   - Signups should be stored as JSON.
+   - Storage key:
+     ibtSignups
+
+7. Regex test:
+   - Temporarily break the Ethiopian phone regex.
+   - Submit a valid phone number.
+   - The form should reject the phone number and show the validation error.
+   - Restore the correct regex afterward.
+
+VALID PHONE EXAMPLES
+
++251912345678
++251911234567
+0912345678
+0911234567
+
+INVALID PHONE EXAMPLES
+
+123456
++251123456789
++25191234
+091234
+abcdefg
