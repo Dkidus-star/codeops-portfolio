@@ -78,8 +78,9 @@ form.addEventListener("submit", function (event) {
   const phone = phoneInput.value.trim();
 
   // Validate name
-  if (name === "") {
-    showMessage("Please enter your name.", "error");
+  if (name.length < 2) {
+    showMessage("Please enter a name with at least two characters.", "error");
+
     nameInput.focus();
     return;
   }
