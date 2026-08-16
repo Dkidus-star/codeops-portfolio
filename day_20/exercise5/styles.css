@@ -1,0 +1,30 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+button {
+  margin: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+#status {
+  margin: 10px 0;
+  font-weight: bold;
+  color: #333;
+}
+#content {
+  margin: 10px 0;
+  padding: 15px;
+  border: 1px solid #ccc;
+  min-height: 200px;
+}
+.loading {
+  color: #0066cc;
+}
+.error {
+  color: #cc0000;
+}
+.success {
+  color: #006600;
+}
