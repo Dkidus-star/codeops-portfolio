@@ -126,11 +126,11 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function saveTheme(theme) {
-  localStorage.setItem(THEME_KEY, theme);
+  save(THEME_KEY, theme);
 }
 
 function loadTheme() {
-  return localStorage.getItem(THEME_KEY) || "light";
+  return load(THEME_KEY, "light");
 }
 
 function applyTheme(theme) {
@@ -153,3 +153,22 @@ themeToggle.addEventListener("click", function () {
 });
 
 applyTheme(loadTheme());
+
+function save(key, data) {
+  localStorage.setItem(key, JSON.stringify(data));
+}
+
+function load(key, fallback = []) {
+  const savedData = localStorage.getItem(key);
+
+  if (savedData === null) {
+    return fallback;
+  }
+
+  try {
+    return JSON.parse(savedData);
+  } catch (error) {
+    console.error("Corrupt localStorage data:", error);
+    return fallback;
+  }
+}
