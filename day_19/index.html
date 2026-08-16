@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day 19 - DOM Practice</title>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 20px;
+        line-height: 1.6;
+      }
+
+      section {
+        border: 1px solid #ddd;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 10px;
+      }
+
+      button {
+        padding: 8px 15px;
+        margin: 5px;
+        cursor: pointer;
+      }
+
+      .highlight {
+        color: white;
+        background-color: #2563eb;
+        padding: 10px;
+        border-radius: 5px;
+      }
+
+      li {
+        margin: 8px 0;
+      }
+
+      .delete-btn {
+        margin-left: 10px;
+      }
+
+      #bubbleBox {
+        padding: 20px;
+        background-color: #eee;
+      }
+
+      input {
+        padding: 8px;
+        width: 250px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1 id="mainTitle">Day 19 DOM Practice</h1>
+
+    <!-- Exercise 1 -->
+    <section>
+      <h2>1. textContent and classList.toggle</h2>
+
+      <h1 id="exerciseTitle">Original Title</h1>
+
+      <button id="changeTitleBtn">Change Title</button>
+    </section>
+
+    <!-- Exercise 2 -->
+    <section>
+      <h2>2. Create Ethiopian Cities</h2>
+
+      <ul id="cityList"></ul>
+    </section>
+
+    <!-- Exercise 3 -->
+    <section>
+      <h2>3. Event Bubbling</h2>
+
+      <div id="bubbleBox">
+        <button id="bubbleButton">Click Me</button>
+      </div>
+
+      <p>Open the browser console and click the button.</p>
+    </section>
+
+    <!-- Exercise 4 -->
+    <section>
+      <h2>4. Event Delegation - Delete Items</h2>
+
+      <ul id="itemList">
+        <li>
+          Coffee
+          <button class="delete-btn">Delete</button>
+        </li>
+
+        <li>
+          Bread
+          <button class="delete-btn">Delete</button>
+        </li>
+
+        <li>
+          Milk
+          <button class="delete-btn">Delete</button>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Exercise 5 -->
+    <section>
+      <h2>5. Form Submit</h2>
+
+      <form id="itemForm">
+        <input
+          type="text"
+          id="itemInput"
+          placeholder="Enter an item"
+          required
+        />
+
+        <button type="submit">Add Item</button>
+      </form>
+
+      <ul id="formList"></ul>
+    </section>
+
+    <script src="script.js"></script>
+  </body>
+</html>

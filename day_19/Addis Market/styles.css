@@ -1,0 +1,359 @@
+/* ========================================
+   GENERAL
+======================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  background-color: #f4f6f8;
+
+  color: #222;
+
+  min-height: 100vh;
+}
+
+/* ========================================
+   HEADER
+======================================== */
+
+.site-header {
+  background-color: #087f5b;
+
+  color: white;
+
+  text-align: center;
+
+  padding: 35px 20px;
+}
+
+.site-header h1 {
+  margin: 0;
+
+  font-size: 38px;
+}
+
+.site-header p {
+  margin: 8px 0 0;
+
+  font-size: 17px;
+}
+
+/* ========================================
+   MAIN CONTAINER
+======================================== */
+
+.container {
+  max-width: 700px;
+
+  margin: 40px auto;
+
+  padding: 0 20px;
+}
+
+/* ========================================
+   SHOPPING CARD
+======================================== */
+
+.shopping-card {
+  background-color: white;
+
+  padding: 30px;
+
+  border-radius: 12px;
+
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.shopping-card h2 {
+  text-align: center;
+
+  margin-top: 0;
+
+  font-size: 28px;
+}
+
+.description {
+  text-align: center;
+
+  color: #666;
+
+  margin-bottom: 30px;
+}
+
+/* ========================================
+   FORM
+======================================== */
+
+#add-form {
+  display: grid;
+
+  gap: 18px;
+
+  margin-bottom: 35px;
+}
+
+.form-group {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 7px;
+}
+
+.form-group label {
+  font-weight: bold;
+
+  font-size: 15px;
+}
+
+.form-group input {
+  width: 100%;
+
+  padding: 12px;
+
+  border: 1px solid #ccc;
+
+  border-radius: 6px;
+
+  font-size: 16px;
+}
+
+.form-group input:focus {
+  outline: none;
+
+  border-color: #087f5b;
+
+  box-shadow: 0 0 0 2px rgba(8, 127, 91, 0.15);
+}
+
+/* ========================================
+   ADD BUTTON
+======================================== */
+
+.add-btn {
+  background-color: #087f5b;
+
+  color: white;
+
+  border: none;
+
+  border-radius: 6px;
+
+  padding: 13px;
+
+  font-size: 16px;
+
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+.add-btn:hover {
+  background-color: #066b4d;
+}
+
+/* ========================================
+   LIST SECTION
+======================================== */
+
+.list-section h3 {
+  border-bottom: 1px solid #ddd;
+
+  padding-bottom: 12px;
+
+  margin-bottom: 15px;
+}
+
+#empty-message {
+  text-align: center;
+
+  color: #777;
+
+  padding: 20px;
+}
+
+/* ========================================
+   SHOPPING LIST
+======================================== */
+
+#list {
+  list-style: none;
+
+  padding: 0;
+
+  margin: 0;
+}
+
+/* ========================================
+   SHOPPING ITEM
+======================================== */
+
+.shopping-item {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+  background-color: #fafafa;
+
+  border: 1px solid #ddd;
+
+  border-radius: 8px;
+
+  padding: 15px;
+
+  margin-bottom: 12px;
+
+  cursor: pointer;
+
+  transition:
+    opacity 0.2s,
+    background-color 0.2s;
+}
+
+/* ========================================
+   ITEM INFORMATION
+======================================== */
+
+.item-info {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 5px;
+}
+
+.item-name {
+  font-size: 17px;
+
+  font-weight: bold;
+}
+
+.item-price {
+  color: #087f5b;
+
+  font-size: 15px;
+}
+
+/* ========================================
+   DELETE BUTTON
+======================================== */
+
+.del {
+  background-color: #dc3545;
+
+  color: white;
+
+  border: none;
+
+  border-radius: 5px;
+
+  padding: 8px 12px;
+
+  cursor: pointer;
+
+  flex-shrink: 0;
+}
+
+.del:hover {
+  background-color: #b02a37;
+}
+
+/* ========================================
+   BOUGHT STATE
+======================================== */
+
+.shopping-item.bought {
+  background-color: #e9ecef;
+
+  opacity: 0.65;
+}
+
+.shopping-item.bought .item-name {
+  text-decoration: line-through;
+}
+
+.shopping-item.bought .item-price {
+  text-decoration: line-through;
+}
+
+/* ========================================
+   TOTAL
+======================================== */
+
+.total-box {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  background-color: #087f5b;
+
+  color: white;
+
+  padding: 20px;
+
+  margin-top: 25px;
+
+  border-radius: 8px;
+
+  font-size: 20px;
+}
+
+.total-box strong {
+  font-size: 23px;
+}
+
+/* ========================================
+   FOOTER
+======================================== */
+
+.site-footer {
+  text-align: center;
+
+  padding: 25px;
+
+  color: #777;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+======================================== */
+
+@media (max-width: 600px) {
+  .site-header h1 {
+    font-size: 30px;
+  }
+
+  .container {
+    margin: 20px auto;
+
+    padding: 0 12px;
+  }
+
+  .shopping-card {
+    padding: 20px;
+  }
+
+  .shopping-item {
+    align-items: flex-start;
+  }
+
+  .total-box {
+    font-size: 18px;
+  }
+
+  .total-box strong {
+    font-size: 20px;
+  }
+}

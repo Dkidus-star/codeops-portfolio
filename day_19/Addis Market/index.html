@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initgitial-scale=1.0" />
+
+    <title>Addis Market - Shopping List</title>
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <header class="site-header">
+      <h1>Addis Market</h1>
+      <p>My Interactive Shopping List</p>
+    </header>
+
+    <main class="container">
+      <section class="shopping-card">
+        <h2>🛒 Shopping List</h2>
+
+        <p class="description">
+          Add the items you need to buy and their prices in ETB.
+        </p>
+
+        <!-- ==========================
+                 ADD ITEM FORM
+            =========================== -->
+
+        <form id="add-form">
+          <div class="form-group">
+            <label for="name"> Item Name </label>
+
+            <input
+              type="text"
+              id="name"
+              placeholder="e.g. Coffee"
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="price"> Price (ETB) </label>
+
+            <input
+              type="number"
+              id="price"
+              placeholder="e.g. 250"
+              min="1"
+              step="0.01"
+            />
+          </div>
+
+          <button type="submit" class="add-btn">Add Item</button>
+        </form>
+
+        <!-- ==========================
+                 SHOPPING LIST
+            =========================== -->
+
+        <section class="list-section">
+          <h3>Items to Buy</h3>
+
+          <p id="empty-message">No items added yet.</p>
+
+          <ul id="list">
+            <!-- JavaScript adds items here -->
+          </ul>
+        </section>
+
+        <!-- ==========================
+                 TOTAL
+            =========================== -->
+
+        <div class="total-box">
+          <span>Total</span>
+
+          <strong> <span id="total">0.00</span> ETB </strong>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>Addis Market &copy; 2026</p>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
