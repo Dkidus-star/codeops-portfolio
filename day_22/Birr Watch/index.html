@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Birr Watch Live ETB Exchange Rates</title>
+    <meta
+      name="description"
+      content="A live Ethiopian Birr exchange-rate tracker. Convert ETB, save currencies to a watchlist, and pick up where you left off."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="passbook">
+      <header class="cover">
+        <div class="cover-texture" aria-hidden="true"></div>
+
+        <div class="cover-top">
+          <span class="eyebrow">Ethiopian Birr · Live Tracker</span>
+          <span class="seal">ETB</span>
+        </div>
+
+        <h1 class="title">Birr Watch</h1>
+
+        <div class="status-row">
+          <p id="status" class="status" role="status" aria-live="polite">
+            Loading rates…
+          </p>
+          <button id="retry" class="btn-retry" type="button" hidden>
+            Try again
+          </button>
+        </div>
+      </header>
+
+      <main class="ledger">
+        <section class="teller" aria-labelledby="convert-heading">
+          <h2 id="convert-heading" class="section-label">
+            <span class="num">01</span> Teller Window
+          </h2>
+
+          <form id="convert-form" class="convert-form">
+            <div class="field">
+              <label for="amount">Amount in ETB</label>
+              <input
+                id="amount"
+                name="amount"
+                type="number"
+                inputmode="decimal"
+                value="100"
+                min="0"
+                step="0.01"
+                required
+              />
+            </div>
+            <div class="field">
+              <label for="currency">Convert to</label>
+              <select id="currency" name="currency" disabled></select>
+            </div>
+            <button type="submit" class="btn-convert" id="convert-btn" disabled>
+              Convert
+            </button>
+          </form>
+
+          <div class="ticker-frame">
+            <p id="result" class="ticker-result" aria-live="polite">—</p>
+          </div>
+        </section>
+
+        <section class="rates" aria-labelledby="rates-heading">
+          <h2 id="rates-heading" class="section-label">
+            <span class="num">02</span> Today's Rates
+            <span class="rates-sub">1 ETB equals</span>
+          </h2>
+          <div class="rates-table-wrap">
+            <table class="rates-table">
+              <tbody id="rates-body">
+                <tr class="rates-empty-row">
+                  <td colspan="2">Fetching current rates…</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="watchlist" aria-labelledby="watchlist-heading">
+          <h2 id="watchlist-heading" class="section-label">
+            <span class="num">03</span> Saved Accounts
+          </h2>
+
+          <button id="watch" type="button" class="btn-watch" disabled>
+            + Add <span id="watch-currency-label">—</span> to watchlist
+          </button>
+
+          <ul id="watchlist-list" class="watchlist-list"></ul>
+        </section>
+      </main>
+
+      <footer class="stub">
+        <p>
+          Rates from <span class="mono">open.er-api.com</span> · Base ETB ·
+          Watchlist saved on this device
+        </p>
+      </footer>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
