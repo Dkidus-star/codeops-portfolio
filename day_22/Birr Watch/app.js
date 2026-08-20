@@ -16,6 +16,7 @@ const FEATURED_CODES = [
 const state = {
   base: "ETB",
   rates: {},
+  watchlist: [],
   amount: 100,
   currency: "USD",
 };
@@ -29,6 +30,8 @@ const convertBtn = document.querySelector("#convert-btn");
 const resultEl = document.querySelector("#result");
 const ratesBody = document.querySelector("#rates-body");
 const watchBtn = document.querySelector("#watch");
+const watchLabel = document.querySelector("#watch-currency-label");
+const watchlistUl = document.querySelector("#watchlist-list");
 
 function formatRate(n) {
   return new Intl.NumberFormat("en-US", { maximumSignificantDigits: 4 }).format(
@@ -81,9 +84,12 @@ function render() {
     state.currency = codes.includes("USD") ? "USD" : codes[0];
   }
   currencySelect.value = state.currency;
+  watchLabel.textContent = state.currency;
   amountInput.value = state.amount;
 
   renderRatesTable(codes);
+  renderWatchlist();
+  updateWatchButtonState();
   doConvert(false);
 }
 
@@ -107,9 +113,38 @@ function renderRatesTable(codes) {
     .join("");
 }
 
+function renderWatchlist() {
+  if (state.watchlist.length === 0) {
+    watchlistUl.innerHTML = `<li class="watchlist-empty">No currencies saved yet — add one from the teller window above.</li>`;
+    return;
+  }
+
+  watchlistUl.innerHTML = state.watchlist
+    .map((c) => {
+      const rate = state.rates[c];
+      const rateText =
+        rate !== undefined ? `1 ETB = ${formatRate(rate)} ${c}` : c;
+      return `
+      <li data-c="${c}">
+        <span>${rateText}</span>
+        <button type="button" class="rm" aria-label="Remove ${c} from watchlist">×</button>
+      </li>
+    `;
+    })
+    .join("");
+}
+
+function updateWatchButtonState() {
+  const isSaved = state.watchlist.includes(state.currency);
+  watchBtn.classList.toggle("added", isSaved);
+  watchBtn.textContent = isSaved
+    ? `✓ ${state.currency} is saved`
+    : `+ Add ${state.currency} to watchlist`;
+}
+
 function triggerFlip() {
   resultEl.classList.remove("flip");
-  void resultEl.offsetWidth; // force reflow so the animation can replay
+  void resultEl.offsetWidth;
   resultEl.classList.add("flip");
 }
 
@@ -134,6 +169,9 @@ function doConvert(reportErrors) {
   const out = amt * rate;
   resultEl.textContent = `${formatAmount(amt)} ETB  =  ${formatAmount(out)} ${state.currency}`;
   triggerFlip();
+
+  watchLabel.textContent = state.currency;
+  updateWatchButtonState();
 }
 
 form.addEventListener("submit", (e) => {
@@ -143,6 +181,23 @@ form.addEventListener("submit", (e) => {
 
 currencySelect.addEventListener("change", () => {
   doConvert(false);
+});
+
+watchBtn.addEventListener("click", () => {
+  const c = currencySelect.value;
+  if (!c || state.watchlist.includes(c)) return;
+  state.watchlist.push(c);
+  renderWatchlist();
+  updateWatchButtonState();
+});
+
+watchlistUl.addEventListener("click", (e) => {
+  if (!e.target.matches(".rm")) return;
+  const li = e.target.closest("li");
+  const c = li.dataset.c;
+  state.watchlist = state.watchlist.filter((x) => x !== c);
+  renderWatchlist();
+  updateWatchButtonState();
 });
 
 retryBtn.addEventListener("click", loadRates);
