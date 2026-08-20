@@ -1,4 +1,5 @@
 const API = "https://open.er-api.com/v6/latest/ETB";
+const STORAGE_KEY = "birrwatch";
 
 const FEATURED_CODES = [
   "USD",
@@ -33,6 +34,7 @@ const watchBtn = document.querySelector("#watch");
 const watchLabel = document.querySelector("#watch-currency-label");
 const watchlistUl = document.querySelector("#watchlist-list");
 
+// ---------- formatting helpers ----------
 function formatRate(n) {
   return new Intl.NumberFormat("en-US", { maximumSignificantDigits: 4 }).format(
     n,
@@ -44,6 +46,28 @@ function formatAmount(n) {
     minimumFractionDigits: 2,
     maximumFractionDigits: 4,
   }).format(n);
+}
+
+function save() {
+  try {
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({
+        watchlist: state.watchlist,
+        currency: state.currency,
+      }),
+    );
+  } catch (err) {}
+}
+
+function load() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (!saved) return;
+    const parsed = JSON.parse(saved);
+    if (Array.isArray(parsed.watchlist)) state.watchlist = parsed.watchlist;
+    if (typeof parsed.currency === "string") state.currency = parsed.currency;
+  } catch (err) {}
 }
 
 async function loadRates() {
@@ -73,6 +97,7 @@ function setControlsEnabled(enabled) {
   watchBtn.disabled = !enabled;
 }
 
+// ---------- rendering ----------
 function render() {
   const codes = Object.keys(state.rates).sort();
 
@@ -85,6 +110,7 @@ function render() {
   }
   currencySelect.value = state.currency;
   watchLabel.textContent = state.currency;
+
   amountInput.value = state.amount;
 
   renderRatesTable(codes);
@@ -144,7 +170,7 @@ function updateWatchButtonState() {
 
 function triggerFlip() {
   resultEl.classList.remove("flip");
-  void resultEl.offsetWidth;
+  void resultEl.offsetWidth; // force reflow so the animation can replay
   resultEl.classList.add("flip");
 }
 
@@ -172,8 +198,10 @@ function doConvert(reportErrors) {
 
   watchLabel.textContent = state.currency;
   updateWatchButtonState();
+  save();
 }
 
+// ---------- events ----------
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   doConvert(true);
@@ -187,6 +215,7 @@ watchBtn.addEventListener("click", () => {
   const c = currencySelect.value;
   if (!c || state.watchlist.includes(c)) return;
   state.watchlist.push(c);
+  save();
   renderWatchlist();
   updateWatchButtonState();
 });
@@ -196,10 +225,16 @@ watchlistUl.addEventListener("click", (e) => {
   const li = e.target.closest("li");
   const c = li.dataset.c;
   state.watchlist = state.watchlist.filter((x) => x !== c);
+  save();
   renderWatchlist();
   updateWatchButtonState();
 });
 
 retryBtn.addEventListener("click", loadRates);
 
-loadRates();
+async function init() {
+  load();
+  await loadRates();
+}
+
+init();
