@@ -52,8 +52,20 @@ main {
 .movie {
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  padding: 1rem;
+  overflow: hidden;
   background: white;
+  padding: 0;
+}
+
+.movie .poster {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  display: block;
+}
+
+.movie-body {
+  padding: 1rem;
 }
 
 .movie h3 { margin: 0 0 0.25rem; font-size: 1rem; }
@@ -68,6 +80,7 @@ main {
   background: var(--accent);
   color: white;
   cursor: pointer;
+  width: 100%;
 }
 
 #watchlist {

@@ -1,0 +1,10 @@
+[
+  { "id": 1, "title": "Inception", "genre": "Sci-Fi", "year": 2010, "runtime": 148, "poster": "inception.jpg" },
+  { "id": 2, "title": "The Grand Budapest Hotel", "genre": "Comedy", "year": 2014, "runtime": 99, "poster": "grand-budapest-hotel.jpg" },
+  { "id": 3, "title": "Parasite", "genre": "Thriller", "year": 2019, "runtime": 132, "poster": "parasite.jpg" },
+  { "id": 4, "title": "Spirited Away", "genre": "Animation", "year": 2001, "runtime": 125, "poster": "spirited-away.jpg" },
+  { "id": 5, "title": "The Dark Knight", "genre": "Action", "year": 2008, "runtime": 152, "poster": "dark-knight.jpg" },
+  { "id": 6, "title": "La La Land", "genre": "Musical", "year": 2016, "runtime": 128, "poster": "la-la-land.jpg" },
+  { "id": 7, "title": "Get Out", "genre": "Horror", "year": 2017, "runtime": 104, "poster": "get-out.jpg" },
+  { "id": 8, "title": "The Grand Tour", "genre": "Comedy", "year": 2013, "runtime": 110, "poster": "grand-tour.jpg" }
+]
