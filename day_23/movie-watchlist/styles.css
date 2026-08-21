@@ -1,12 +1,14 @@
 :root {
-  --accent: #E63946;
-  --ink: #1A2433;
-  --line: #E2E8F0;
+  --accent: #e63946;
+  --ink: #1a2433;
+  --line: #e2e8f0;
   --radius: 10px;
-  --bg: #F8F9FB;
+  --bg: #f8f9fb;
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
@@ -26,7 +28,10 @@ header {
   justify-content: space-between;
 }
 
-header h1 { margin: 0; font-size: 1.25rem; }
+header h1 {
+  margin: 0;
+  font-size: 1.25rem;
+}
 
 header input {
   padding: 0.5rem;
@@ -37,7 +42,7 @@ header input {
 
 main {
   display: grid;
-  grid-template-columns: 1fr;   /* mobile */
+  grid-template-columns: 1fr; /* mobile */
   gap: 1rem;
   padding: 1rem;
 }
@@ -68,9 +73,19 @@ main {
   padding: 1rem;
 }
 
-.movie h3 { margin: 0 0 0.25rem; font-size: 1rem; }
-.movie .meta { margin: 0 0 0.5rem; color: #6b7280; font-size: 0.85rem; }
-.runtime { color: var(--accent); font-weight: 700; }
+.movie h3 {
+  margin: 0 0 0.25rem;
+  font-size: 1rem;
+}
+.movie .meta {
+  margin: 0 0 0.5rem;
+  color: #6b7280;
+  font-size: 0.85rem;
+}
+.runtime {
+  color: var(--accent);
+  font-weight: 700;
+}
 
 .movie .add {
   margin-top: 0.75rem;
@@ -91,7 +106,10 @@ main {
   height: fit-content;
 }
 
-#watchlist h2 { margin-top: 0; font-size: 1.1rem; }
+#watchlist h2 {
+  margin-top: 0;
+  font-size: 1.1rem;
+}
 
 footer {
   padding: 1rem;
@@ -100,5 +118,42 @@ footer {
 }
 
 @media (min-width: 800px) {
-  main { grid-template-columns: 2fr 1fr; }
+  main {
+    grid-template-columns: 2fr 1fr;
+  }
+}
+
+.watchlist-items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.watchlist-items li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+}
+
+.watchlist-items .rm {
+  border: none;
+  background: transparent;
+  color: var(--accent);
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0 0.25rem;
+}
+
+.total {
+  margin-top: 1rem;
+  font-weight: 700;
+  border-top: 1px solid var(--line);
+  padding-top: 0.75rem;
 }
