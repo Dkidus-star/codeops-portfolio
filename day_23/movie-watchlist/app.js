@@ -2,10 +2,56 @@ const moviesEl = document.querySelector("#movies");
 const watchlistEl = document.querySelector("#watchlist-body");
 const searchEl = document.querySelector("#search");
 
+const saveForm = document.querySelector("#save-form");
+const nameEl = document.querySelector("#save-name");
+const emailEl = document.querySelector("#save-email");
+const errEl = document.querySelector("#form-error");
+
+const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function validate({ name, email }) {
+  if (!name.trim()) return "Please enter your name.";
+  if (!EMAIL.test(email)) return "Enter a valid email address.";
+  if (state.watchlist.length === 0) return "Your watchlist is empty.";
+  return "";
+}
+
+saveForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const data = { name: nameEl.value, email: emailEl.value };
+  const msg = validate(data);
+
+  errEl.className = "error";
+  errEl.textContent = msg;
+  if (msg) return;
+
+  saveWatchlist(data);
+});
+
+function saveWatchlist(data) {
+  const record = {
+    ...data,
+    movies: state.watchlist,
+    totalRuntime: watchTotal(),
+    savedAt: new Date().toISOString(),
+  };
+  console.log("Watchlist saved:", record);
+  showConfirmation(record);
+  saveForm.reset();
+}
+
+function showConfirmation(record) {
+  errEl.className = "success";
+  const count = record.movies.length;
+  errEl.textContent =
+    `Saved! We'll send ${count} movie${count === 1 ? "" : "s"} ` +
+    `(${record.totalRuntime} min total) to ${record.email}.`;
+}
+
 const state = {
-  movies: [], // loaded from JSON
-  watchlist: [], // { id, title, runtime }
-  search: "", // current filter text
+  movies: [],
+  watchlist: [],
+  search: "",
 };
 
 async function loadMovies() {

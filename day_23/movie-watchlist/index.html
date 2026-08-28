@@ -21,6 +21,29 @@
 
       <aside id="watchlist" aria-label="Your watchlist">
         <h2>Your Watchlist</h2>
+        <aside id="watchlist" aria-label="Your watchlist">
+          <h2>Your Watchlist</h2>
+          <div id="watchlist-body">
+            <p>No movies added yet.</p>
+          </div>
+
+          <form id="save-form" novalidate>
+            <label
+              >Your name
+              <input id="save-name" required />
+            </label>
+            <label
+              >Email
+              <input
+                id="save-email"
+                type="email"
+                placeholder="you@example.com"
+              />
+            </label>
+            <p id="form-error" class="error" aria-live="polite"></p>
+            <button type="submit">Save &amp; Share Watchlist</button>
+          </form>
+        </aside>
         <div id="watchlist-body">
           <p>No movies added yet.</p>
         </div>
