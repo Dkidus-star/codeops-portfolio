@@ -1,15 +1,19 @@
 import PropTypes from "prop-types";
+import Card from "./Card";
 
 function Dish({ name, price, spicy, currency = "ETB" }) {
   return (
-    <div className="dish">
-      <h3>
-        {name} {spicy && <span>🌶️ Spicy</span>}
-      </h3>
-      <p>
-        {price} {currency}
-      </p>
-    </div>
+    <Card>
+      <div className="dish">
+        <h3>
+          {name} {spicy && <span>🌶️ Spicy</span>}
+        </h3>
+
+        <p>
+          {price} {currency}
+        </p>
+      </div>
+    </Card>
   );
 }
 
