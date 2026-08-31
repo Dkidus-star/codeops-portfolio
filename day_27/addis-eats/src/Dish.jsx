@@ -3,7 +3,9 @@ import PropTypes from "prop-types";
 function Dish({ name, price, spicy, currency = "ETB" }) {
   return (
     <div className="dish">
-      <h3>{name}</h3>
+      <h3>
+        {name} {spicy && <span>🌶️ Spicy</span>}
+      </h3>
       <p>
         {price} {currency}
       </p>
