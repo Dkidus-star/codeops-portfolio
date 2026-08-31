@@ -1,6 +1,6 @@
 import Dish from "./Dish";
 
-function DishList({ dishes }) {
+function DishList({ dishes, onAdd }) {
   return (
     <div>
       {dishes.map((dish) => (
@@ -9,6 +9,7 @@ function DishList({ dishes }) {
           name={dish.name}
           price={dish.price}
           spicy={dish.spicy}
+          onAdd={onAdd}
         />
       ))}
     </div>

@@ -2,7 +2,7 @@ import { useState } from "react";
 import CategoryBar from "./CategoryBar";
 import DishList from "./DishList";
 
-function Menu({ dishes }) {
+function Menu({ dishes, onAdd }) {
   const [category, setCategory] = useState("All");
 
   const filteredDishes =
@@ -14,7 +14,7 @@ function Menu({ dishes }) {
     <div>
       <CategoryBar category={category} setCategory={setCategory} />
 
-      <DishList dishes={filteredDishes} />
+      <DishList dishes={filteredDishes} onAdd={onAdd} />
     </div>
   );
 }
