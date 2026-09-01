@@ -30,7 +30,7 @@ function Menu({ onAdd }) {
     }
 
     loadDishes();
-  }, []);
+  }, [category]);
 
   if (loading) {
     return <p>Loading menu...</p>;
