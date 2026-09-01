@@ -9,12 +9,16 @@ function Menu({ onAdd }) {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    const controller = new AbortController();
+
     async function loadDishes() {
       try {
         setLoading(true);
         setError("");
 
-        const response = await fetch("/dishes.json");
+        const response = await fetch("/dishes.json", {
+          signal: controller.signal,
+        });
 
         if (!response.ok) {
           throw new Error("Failed to load the menu.");
@@ -23,13 +27,19 @@ function Menu({ onAdd }) {
         const data = await response.json();
         setDishes(data);
       } catch (err) {
-        setError(err.message);
+        if (err.name !== "AbortError") {
+          setError(err.message);
+        }
       } finally {
         setLoading(false);
       }
     }
 
     loadDishes();
+
+    return () => {
+      controller.abort();
+    };
   }, [category]);
 
   if (loading) {
