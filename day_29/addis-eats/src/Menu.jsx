@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CategoryBar from "./CategoryBar";
 import DishList from "./DishList";
 
@@ -7,6 +7,14 @@ function Menu({ onAdd }) {
   const [dishes, setDishes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  const searchRef = useRef(null);
+
+  useEffect(() => {
+    if (!loading) {
+      searchRef.current?.focus();
+    }
+  }, [loading]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -57,6 +65,8 @@ function Menu({ onAdd }) {
 
   return (
     <div>
+      <input ref={searchRef} type="text" placeholder="Search dishes..." />
+
       <CategoryBar category={category} setCategory={setCategory} />
 
       <DishList dishes={filteredDishes} onAdd={onAdd} />
