@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 
 import Layout from "./Layout";
+import { CartProvider } from "./CartContext";
 
 import Home from "./pages/Home";
 import MenuPage from "./pages/MenuPage";
@@ -10,19 +11,21 @@ import NotFound from "./pages/NotFound";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Home />} />
+    <CartProvider>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
 
-        <Route path="menu" element={<MenuPage />} />
+          <Route path="menu" element={<MenuPage />} />
 
-        <Route path="menu/:id" element={<DishPage />} />
+          <Route path="menu/:id" element={<DishPage />} />
 
-        <Route path="cart" element={<CartPage />} />
+          <Route path="cart" element={<CartPage />} />
 
-        <Route path="*" element={<NotFound />} />
-      </Route>
-    </Routes>
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      </Routes>
+    </CartProvider>
   );
 }
 
