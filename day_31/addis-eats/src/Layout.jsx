@@ -8,7 +8,7 @@ function Layout() {
 
         <nav>
           <Link to="/">Home</Link> <Link to="/menu">Menu</Link>{" "}
-          <Link to="/cart">Cart</Link>
+          <Link to="/cart">Cart</Link> <Link to="/checkout">Checkout</Link>
         </nav>
       </header>
 
