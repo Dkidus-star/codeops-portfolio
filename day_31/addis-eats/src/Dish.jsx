@@ -15,6 +15,7 @@ function Dish({ dish }) {
       <Link to={`/menu/${dish.id}`}>View Dish</Link>
 
       <br />
+      <br />
 
       <button onClick={() => addToCart(dish)}>Add to Cart</button>
     </article>
