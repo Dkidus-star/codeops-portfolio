@@ -1,20 +1,53 @@
-import { useReducer } from "react";
-import { cartReducer } from "../reducers/cartReducer";
+import { useContext } from "react";
+import { CartContext } from "../context/CartContext";
+
+let nextCartId = 1;
 
 function Cart() {
-  const [items, dispatch] = useReducer(cartReducer, []);
+  const { items, dispatch, total } = useContext(CartContext);
 
-  const addItem = (item) => {
+  const dishes = [
+    {
+      id: 1,
+      name: "Doro Wat",
+      price: 240,
+    },
+    {
+      id: 2,
+      name: "Shiro",
+      price: 120,
+    },
+    {
+      id: 3,
+      name: "Tibs",
+      price: 280,
+    },
+    {
+      id: 4,
+      name: "Kitfo",
+      price: 350,
+    },
+    {
+      id: 5,
+      name: "Baklava",
+      price: 100,
+    },
+  ];
+
+  const addItem = (dish) => {
     dispatch({
       type: "add",
-      payload: item,
+      payload: {
+        ...dish,
+        cartId: nextCartId++,
+      },
     });
   };
 
-  const removeItem = (id) => {
+  const removeItem = (cartId) => {
     dispatch({
       type: "remove",
-      payload: id,
+      payload: cartId,
     });
   };
 
@@ -28,37 +61,35 @@ function Cart() {
     <div>
       <h2>Cart</h2>
 
-      <button
-        onClick={() =>
-          addItem({
-            id: Date.now(),
-            name: "Doro Wat",
-            price: 240,
-          })
-        }
-      >
-        Add Doro Wat
-      </button>
+      <h3>Menu</h3>
 
-      <button
-        onClick={() => {
-          if (items.length > 0) {
-            removeItem(items[0].id);
-          }
-        }}
-      >
-        Remove First Item
-      </button>
+      {dishes.map((dish) => (
+        <div key={dish.id}>
+          <span>
+            {dish.name} - {dish.price} ETB
+          </span>
 
-      <button onClick={clearCart}>Clear Cart</button>
+          <button onClick={() => addItem(dish)}>Add</button>
+        </div>
+      ))}
 
-      <p>Items: {items.length}</p>
+      <hr />
+
+      <h3>Cart Items: {items.length}</h3>
 
       {items.map((item) => (
-        <p key={item.id}>
-          {item.name} - {item.price} ETB
-        </p>
+        <div key={item.cartId}>
+          <span>
+            {item.name} - {item.price} ETB
+          </span>
+
+          <button onClick={() => removeItem(item.cartId)}>Remove</button>
+        </div>
       ))}
+
+      <h3>Total: {total} ETB</h3>
+
+      <button onClick={clearCart}>Clear Cart</button>
     </div>
   );
 }

@@ -4,7 +4,7 @@ export function cartReducer(state, action) {
       return [...state, action.payload];
 
     case "remove":
-      return state.filter((item) => item.id !== action.payload);
+      return state.filter((item) => item.cartId !== action.payload);
 
     case "clear":
       return [];
