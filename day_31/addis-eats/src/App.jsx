@@ -4,6 +4,7 @@ import Layout from "./Layout";
 
 import Home from "./pages/Home";
 import MenuPage from "./pages/MenuPage";
+import DishPage from "./pages/DishPage";
 import CartPage from "./pages/CartPage";
 import NotFound from "./pages/NotFound";
 
@@ -14,6 +15,8 @@ function App() {
         <Route index element={<Home />} />
 
         <Route path="menu" element={<MenuPage />} />
+
+        <Route path="menu/:id" element={<DishPage />} />
 
         <Route path="cart" element={<CartPage />} />
 

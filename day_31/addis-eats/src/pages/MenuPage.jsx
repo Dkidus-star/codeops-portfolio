@@ -1,8 +1,14 @@
+import Dish from "../Dish";
+import dishes from "../data";
+
 function MenuPage() {
   return (
     <section>
       <h2>Our Menu</h2>
-      <p>Choose your favorite Ethiopian dish.</p>
+
+      {dishes.map((dish) => (
+        <Dish key={dish.id} dish={dish} />
+      ))}
     </section>
   );
 }
