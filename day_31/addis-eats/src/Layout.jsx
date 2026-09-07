@@ -7,9 +7,8 @@ function Layout() {
         <h1>Addis Eats</h1>
 
         <nav>
-          <Link to="/">Home</Link>
-          {" | "}
-          <Link to="/menu">Menu</Link>
+          <Link to="/">Home</Link> <Link to="/menu">Menu</Link>{" "}
+          <Link to="/cart">Cart</Link>
         </nav>
       </header>
 
