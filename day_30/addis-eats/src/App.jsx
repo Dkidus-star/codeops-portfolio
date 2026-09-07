@@ -1,5 +1,6 @@
 import Menu from "./components/Menu";
 import DishData from "./components/DishData";
+import Cart from "./components/Cart";
 
 function App() {
   return (
@@ -9,6 +10,8 @@ function App() {
       <Menu />
 
       <DishData />
+
+      <Cart />
     </div>
   );
 }
