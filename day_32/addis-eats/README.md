@@ -1,26 +1,27 @@
-# Addis Eats React Routing Project
+# Addis Eats Zustand State Management
 
-A React food ordering application built during CodeOps Day 31 to practice React Router, dynamic routes, query parameters, protected routes, and shared cart state.
+A routed React food-ordering application updated during Day 32 to practice Zustand state management, narrow selectors, Context separation, authentication, and persistent cart state.
 
 ## 🚀 Features
 
-- Home page
-- Menu page
-- Individual dish pages
-- Dynamic dish routes using `useParams`
-- Category filtering using URL query parameters
-- Shopping cart
-- Cart state preserved while navigating
-- Sign-in page
+- React Router navigation
+- Home, Menu, Dish, Cart, Sign In, and Checkout pages
+- Dynamic dish routes
+- Category filtering with URL query parameters
 - Protected checkout route
-- Redirect back to checkout after sign-in
-- 404 Not Found page
-- Shared layout with navigation
+- Separate Auth and Theme providers
+- Zustand cart store
+- Narrow Zustand selectors
+- Add, remove, and clear cart actions
+- Persistent cart using Zustand `persist`
+- Cart survives browser refresh
+- React DevTools re-render investigation
 
 ## 🛠️ Technologies
 
 - React
 - React Router DOM
+- Zustand
 - Vite
 - JavaScript
 - CSS
@@ -30,6 +31,10 @@ A React food ordering application built during CodeOps Day 31 to practice React 
 
 ```text
 src/
+├── context/
+│   ├── AuthContext.jsx
+│   └── ThemeContext.jsx
+│
 ├── pages/
 │   ├── Home.jsx
 │   ├── MenuPage.jsx
@@ -39,16 +44,94 @@ src/
 │   ├── Checkout.jsx
 │   └── NotFound.jsx
 │
+├── store/
+│   └── cartStore.js
+│
 ├── App.jsx
 ├── Layout.jsx
-├── CartContext.jsx
 ├── RequireAuth.jsx
 ├── Dish.jsx
 ├── data.js
-├── App.css
 ├── index.css
 └── main.jsx
 ```
+
+## 🛒 Zustand Cart Store
+
+The cart was migrated from React Context to a Zustand store.
+
+The store contains:
+
+```text
+items
+addItem
+remove
+clear
+```
+
+Components use narrow selectors instead of subscribing to the entire store.
+
+Example:
+
+```jsx
+const items = useCartStore((state) => state.items);
+```
+
+Another component can select only an action:
+
+```jsx
+const addItem = useCartStore((state) => state.addItem);
+```
+
+## 💾 Persistent Cart
+
+The Zustand `persist` middleware stores the cart in Local Storage.
+
+```text
+Add item
+   ↓
+Zustand Store
+   ↓
+Local Storage
+   ↓
+Browser Refresh
+   ↓
+Cart remains
+```
+
+The persistence key is:
+
+```text
+addis-eats-cart
+```
+
+## 🔐 Authentication
+
+Authentication remains in its own React Context.
+
+```text
+AuthProvider
+    ↓
+useAuth()
+    ↓
+RequireAuth
+    ↓
+Protected Checkout
+```
+
+Unauthenticated users are redirected to Sign In and returned to their original destination after signing in.
+
+## 🎨 Theme
+
+Theme state is also separated into its own provider:
+
+```text
+ThemeProvider
+    ↓
+useTheme()
+```
+
+This keeps authentication, theme, and cart state independent.
 
 ## 🧭 Routes
 
@@ -64,56 +147,13 @@ src/
 | `/checkout`            | Protected checkout |
 | `*`                    | 404 page           |
 
-## 🔐 Authentication
+## 🔍 React DevTools
 
-Checkout is protected using `RequireAuth`.
+React DevTools was used to observe component rendering while adding dishes to the cart.
 
-If the user is not signed in:
+Three dishes were added to the cart to investigate which components re-render when Zustand state changes.
 
-```text
-/checkout
-     ↓
-/signin
-     ↓
-Sign In
-     ↓
-/checkout
-```
-
-Authentication is simulated using `localStorage`.
-
-## 🛒 Cart
-
-The cart is managed with React Context.
-
-Users can:
-
-- Add dishes
-- Increase quantities
-- Remove dishes
-- View subtotals
-- View the total order price
-
-The cart remains available while navigating between pages.
-
-## 🎯 What I Learned
-
-This project helped me practice:
-
-- `BrowserRouter`
-- `Routes` and `Route`
-- Nested routes
-- `Outlet`
-- `Link`
-- `Navigate`
-- `useNavigate`
-- `useLocation`
-- `useParams`
-- `useSearchParams`
-- Protected routes
-- React Context
-- Shared state
-- URL-based application state
+Narrow selectors were used to reduce unnecessary subscriptions to store state.
 
 ## ▶️ Run the Project
 
@@ -135,5 +175,5 @@ Then open the local URL provided by Vite.
 
 **Project:** Addis Eats
 **Module:** React
-**Day:** 31
-**Topic:** React Router and Application Routing
+**Day:** 32
+**Topic:** Zustand State Management
