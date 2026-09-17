@@ -1,7 +1,18 @@
-import { useCart } from "../CartContext";
+import useCartStore from "../store/cartStore";
 
 function Checkout() {
-  const { cart, total } = useCart();
+  const items = useCartStore((state) => state.items);
+  const clear = useCartStore((state) => state.clear);
+
+  const total = items.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0,
+  );
+
+  function handlePlaceOrder() {
+    alert("Order placed successfully!");
+    clear();
+  }
 
   return (
     <section>
@@ -9,7 +20,7 @@ function Checkout() {
 
       <h3>Order Summary</h3>
 
-      {cart.map((item) => (
+      {items.map((item) => (
         <p key={item.id}>
           {item.name} × {item.quantity}
         </p>
@@ -17,7 +28,7 @@ function Checkout() {
 
       <h3>Total: {total} ETB</h3>
 
-      <button>Place Order</button>
+      <button onClick={handlePlaceOrder}>Place Order</button>
     </section>
   );
 }

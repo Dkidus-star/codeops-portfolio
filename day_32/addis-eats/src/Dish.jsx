@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import { useCart } from "./CartContext";
+import useCartStore from "./store/cartStore";
 
 function Dish({ dish }) {
-  const { addToCart } = useCart();
+  const addItem = useCartStore((state) => state.addItem);
 
   return (
     <article>
@@ -15,9 +15,8 @@ function Dish({ dish }) {
       <Link to={`/menu/${dish.id}`}>View Dish</Link>
 
       <br />
-      <br />
 
-      <button onClick={() => addToCart(dish)}>Add to Cart</button>
+      <button onClick={() => addItem(dish)}>Add to Cart</button>
     </article>
   );
 }
