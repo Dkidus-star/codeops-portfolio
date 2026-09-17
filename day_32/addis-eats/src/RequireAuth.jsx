@@ -1,8 +1,8 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { useAuth } from "./context/AuthContext";
 
 function RequireAuth() {
-  const isSignedIn = localStorage.getItem("isSignedIn") === "true";
-
+  const { isSignedIn } = useAuth();
   const location = useLocation();
 
   if (!isSignedIn) {

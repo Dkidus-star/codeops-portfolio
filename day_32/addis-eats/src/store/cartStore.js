@@ -1,4 +1,3 @@
-```js
 import { create } from "zustand";
 
 const useCartStore = create((set) => ({
@@ -6,9 +5,7 @@ const useCartStore = create((set) => ({
 
   addItem: (dish) =>
     set((state) => {
-      const existingItem = state.items.find(
-        (item) => item.id === dish.id
-      );
+      const existingItem = state.items.find((item) => item.id === dish.id);
 
       if (existingItem) {
         return {
@@ -18,7 +15,7 @@ const useCartStore = create((set) => ({
                   ...item,
                   quantity: item.quantity + 1,
                 }
-              : item
+              : item,
           ),
         };
       }
@@ -43,4 +40,3 @@ const useCartStore = create((set) => ({
 }));
 
 export default useCartStore;
-```;
