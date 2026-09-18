@@ -1,7 +1,6 @@
 import { useState } from "react";
 import useCartStore from "../store/cartStore";
 
-// Pure validation function
 function validate(form) {
   const errors = {};
 
@@ -32,13 +31,13 @@ function Checkout() {
   });
 
   const [touched, setTouched] = useState({});
+  const [submitting, setSubmitting] = useState(false);
 
   const total = items.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0,
   );
 
-  // Derive errors on every render
   const errors = validate(form);
 
   function handleChange(event) {
@@ -59,11 +58,29 @@ function Checkout() {
     }));
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
-    console.log("Form submitted:", form);
-    console.log("Validation errors:", errors);
+    if (Object.keys(errors).length > 0) {
+      setTouched({
+        name: true,
+        phone: true,
+        area: true,
+        notes: true,
+      });
+
+      return;
+    }
+
+    setSubmitting(true);
+
+    // Simulate sending the order
+    await new Promise((resolve) => {
+      setTimeout(resolve, 2000);
+    });
+
+    console.log("Order submitted:", form);
+    setSubmitting(false);
   }
 
   return (
@@ -157,7 +174,9 @@ function Checkout() {
           />
         </div>
 
-        <button type="submit">Place Order — {total} ETB</button>
+        <button type="submit" disabled={submitting}>
+          {submitting ? "Placing Order..." : `Place Order — ${total} ETB`}
+        </button>
       </form>
     </section>
   );
