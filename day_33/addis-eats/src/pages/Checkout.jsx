@@ -1,6 +1,26 @@
 import { useState } from "react";
 import useCartStore from "../store/cartStore";
 
+// Pure validation function
+function validate(form) {
+  const errors = {};
+
+  if (!form.name.trim()) {
+    errors.name = "Full name is required.";
+  }
+
+  if (!/^(?:\+251|0)9\d{8}$/.test(form.phone.trim())) {
+    errors.phone =
+      "Enter a valid TeleBirr phone number, for example 0912345678.";
+  }
+
+  if (!form.area.trim()) {
+    errors.area = "Delivery area is required.";
+  }
+
+  return errors;
+}
+
 function Checkout() {
   const items = useCartStore((state) => state.items);
 
@@ -16,6 +36,9 @@ function Checkout() {
     0,
   );
 
+  // Derive errors on every render
+  const errors = validate(form);
+
   function handleChange(event) {
     const { name, value } = event.target;
 
@@ -29,6 +52,7 @@ function Checkout() {
     event.preventDefault();
 
     console.log("Form submitted:", form);
+    console.log("Validation errors:", errors);
   }
 
   return (
