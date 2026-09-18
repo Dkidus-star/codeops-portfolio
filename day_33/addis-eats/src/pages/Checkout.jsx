@@ -1,6 +1,7 @@
 import { useState } from "react";
 import useCartStore from "../store/cartStore";
 
+// Pure validation function
 function validate(form) {
   const errors = {};
 
@@ -37,6 +38,7 @@ function Checkout() {
     0,
   );
 
+  // Derive errors on every render
   const errors = validate(form);
 
   function handleChange(event) {
@@ -80,9 +82,17 @@ function Checkout() {
             value={form.name}
             onChange={handleChange}
             onBlur={handleBlur}
+            aria-invalid={Boolean(touched.name && errors.name)}
+            aria-describedby={
+              touched.name && errors.name ? "name-error" : undefined
+            }
           />
 
-          {touched.name && errors.name && <p>{errors.name}</p>}
+          {touched.name && errors.name && (
+            <p id="name-error" role="alert">
+              {errors.name}
+            </p>
+          )}
         </div>
 
         {/* Phone */}
@@ -97,9 +107,17 @@ function Checkout() {
             onChange={handleChange}
             onBlur={handleBlur}
             placeholder="09XXXXXXXX"
+            aria-invalid={Boolean(touched.phone && errors.phone)}
+            aria-describedby={
+              touched.phone && errors.phone ? "phone-error" : undefined
+            }
           />
 
-          {touched.phone && errors.phone && <p>{errors.phone}</p>}
+          {touched.phone && errors.phone && (
+            <p id="phone-error" role="alert">
+              {errors.phone}
+            </p>
+          )}
         </div>
 
         {/* Delivery Area */}
@@ -113,9 +131,17 @@ function Checkout() {
             value={form.area}
             onChange={handleChange}
             onBlur={handleBlur}
+            aria-invalid={Boolean(touched.area && errors.area)}
+            aria-describedby={
+              touched.area && errors.area ? "area-error" : undefined
+            }
           />
 
-          {touched.area && errors.area && <p>{errors.area}</p>}
+          {touched.area && errors.area && (
+            <p id="area-error" role="alert">
+              {errors.area}
+            </p>
+          )}
         </div>
 
         {/* Notes */}
