@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import useCartStore from "../store/cartStore";
 
 function validate(form) {
@@ -32,12 +32,27 @@ function Checkout() {
 
   const [touched, setTouched] = useState({});
   const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+
+  // References to our form fields
+  const nameRef = useRef(null);
+  const phoneRef = useRef(null);
+  const areaRef = useRef(null);
+  const notesRef = useRef(null);
+
+  const fieldRefs = {
+    name: nameRef,
+    phone: phoneRef,
+    area: areaRef,
+    notes: notesRef,
+  };
 
   const total = items.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0,
   );
 
+  // Derive errors on every render
   const errors = validate(form);
 
   function handleChange(event) {
@@ -47,6 +62,9 @@ function Checkout() {
       ...currentForm,
       [name]: value,
     }));
+
+    // Remove the server error when the user starts editing again
+    setSubmitError("");
   }
 
   function handleBlur(event) {
@@ -58,9 +76,18 @@ function Checkout() {
     }));
   }
 
+  function focusFirstError(currentErrors) {
+    const firstErrorField = Object.keys(currentErrors)[0];
+
+    if (firstErrorField) {
+      fieldRefs[firstErrorField]?.current?.focus();
+    }
+  }
+
   async function handleSubmit(event) {
     event.preventDefault();
 
+    // Check validation before submitting
     if (Object.keys(errors).length > 0) {
       setTouched({
         name: true,
@@ -69,23 +96,57 @@ function Checkout() {
         notes: true,
       });
 
+      focusFirstError(errors);
+
       return;
     }
 
     setSubmitting(true);
+    setSubmitError("");
 
-    // Simulate sending the order
-    await new Promise((resolve) => {
-      setTimeout(resolve, 2000);
-    });
+    try {
+      // Simulate a failed request
+      await new Promise((_, reject) => {
+        setTimeout(() => {
+          reject(
+            new Error(
+              "We couldn't place your order. The checkout service is unavailable.",
+            ),
+          );
+        }, 2000);
+      });
 
-    console.log("Order submitted:", form);
-    setSubmitting(false);
+      console.log("Order submitted:", form);
+    } catch (error) {
+      // Show why the request failed
+      setSubmitError(error.message);
+
+      // Keep the form values and focus the first field
+      // so the user knows where to continue.
+      const currentErrors = validate(form);
+
+      if (Object.keys(currentErrors).length > 0) {
+        setTouched({
+          name: true,
+          phone: true,
+          area: true,
+          notes: true,
+        });
+
+        focusFirstError(currentErrors);
+      } else {
+        nameRef.current?.focus();
+      }
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
     <section>
       <h2>Checkout</h2>
+
+      {submitError && <p role="alert">{submitError}</p>}
 
       <form onSubmit={handleSubmit}>
         {/* Full Name */}
@@ -93,6 +154,7 @@ function Checkout() {
           <label htmlFor="name">Full Name</label>
 
           <input
+            ref={nameRef}
             id="name"
             name="name"
             type="text"
@@ -117,6 +179,7 @@ function Checkout() {
           <label htmlFor="phone">TeleBirr Phone</label>
 
           <input
+            ref={phoneRef}
             id="phone"
             name="phone"
             type="tel"
@@ -142,6 +205,7 @@ function Checkout() {
           <label htmlFor="area">Delivery Area</label>
 
           <input
+            ref={areaRef}
             id="area"
             name="area"
             type="text"
@@ -166,6 +230,7 @@ function Checkout() {
           <label htmlFor="notes">Notes (optional)</label>
 
           <textarea
+            ref={notesRef}
             id="notes"
             name="notes"
             value={form.notes}
