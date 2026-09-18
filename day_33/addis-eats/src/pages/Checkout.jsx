@@ -1,7 +1,6 @@
 import { useState } from "react";
 import useCartStore from "../store/cartStore";
 
-// Pure validation function
 function validate(form) {
   const errors = {};
 
@@ -31,12 +30,13 @@ function Checkout() {
     notes: "",
   });
 
+  const [touched, setTouched] = useState({});
+
   const total = items.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0,
   );
 
-  // Derive errors on every render
   const errors = validate(form);
 
   function handleChange(event) {
@@ -45,6 +45,15 @@ function Checkout() {
     setForm((currentForm) => ({
       ...currentForm,
       [name]: value,
+    }));
+  }
+
+  function handleBlur(event) {
+    const { name } = event.target;
+
+    setTouched((currentTouched) => ({
+      ...currentTouched,
+      [name]: true,
     }));
   }
 
@@ -60,47 +69,65 @@ function Checkout() {
       <h2>Checkout</h2>
 
       <form onSubmit={handleSubmit}>
+        {/* Full Name */}
         <div>
           <label htmlFor="name">Full Name</label>
+
           <input
             id="name"
             name="name"
             type="text"
             value={form.name}
             onChange={handleChange}
+            onBlur={handleBlur}
           />
+
+          {touched.name && errors.name && <p>{errors.name}</p>}
         </div>
 
+        {/* Phone */}
         <div>
           <label htmlFor="phone">TeleBirr Phone</label>
+
           <input
             id="phone"
             name="phone"
             type="tel"
             value={form.phone}
             onChange={handleChange}
+            onBlur={handleBlur}
             placeholder="09XXXXXXXX"
           />
+
+          {touched.phone && errors.phone && <p>{errors.phone}</p>}
         </div>
 
+        {/* Delivery Area */}
         <div>
           <label htmlFor="area">Delivery Area</label>
+
           <input
             id="area"
             name="area"
             type="text"
             value={form.area}
             onChange={handleChange}
+            onBlur={handleBlur}
           />
+
+          {touched.area && errors.area && <p>{errors.area}</p>}
         </div>
 
+        {/* Notes */}
         <div>
           <label htmlFor="notes">Notes (optional)</label>
+
           <textarea
             id="notes"
             name="notes"
             value={form.notes}
             onChange={handleChange}
+            onBlur={handleBlur}
           />
         </div>
 
