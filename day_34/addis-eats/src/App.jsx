@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, Profiler } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import Layout from "./Layout";
@@ -18,6 +18,10 @@ import RouteSkeleton from "./RouteSkeleton";
 const Checkout = lazy(() => import("./pages/Checkout"));
 const Receipt = lazy(() => import("./pages/Receipt"));
 
+function onRender(id, phase, actualDuration) {
+  console.log(`${id} ${phase}: ${actualDuration.toFixed(2)}ms`);
+}
+
 function App() {
   return (
     <AuthProvider>
@@ -26,7 +30,14 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
 
-            <Route path="menu" element={<MenuPage />} />
+            <Route
+              path="menu"
+              element={
+                <Profiler id="MenuPage" onRender={onRender}>
+                  <MenuPage />
+                </Profiler>
+              }
+            />
 
             <Route path="menu/:id" element={<DishPage />} />
 
