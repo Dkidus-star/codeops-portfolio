@@ -1,21 +1,10 @@
 import { notFound } from "next/navigation";
 
 export default function DishPage({ params }) {
-  const { id } = params;
-
-  if (id === "trigger-error") {
-    throw new Error("Simulated rendering error in the menu segment!");
-  }
-
-  const validDishes = ["kitfo", "doro-wot", "shiro"];
-  if (!validDishes.includes(id)) {
+  // Trigger not-found.js for Exercise 7
+  if (params.id === "unknown") {
     notFound();
   }
 
-  return (
-    <main>
-      <h2>Dish Details: {id}</h2>
-      <p>This is the dynamic page for {id}.</p>
-    </main>
-  );
+  return <div>Viewing Dish ID: {params.id}</div>;
 }

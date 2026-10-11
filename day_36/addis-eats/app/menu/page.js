@@ -1,12 +1,9 @@
-import DishList from "./DishList";
-
 export default async function Menu() {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  // Artificial delay to force loading.js to appear for Exercise 6
+  await new Promise((resolve) => setTimeout(resolve, 2000));
 
-  return (
-    <main>
-      <h1>Our Menu</h1>
-      <DishList />
-    </main>
-  );
+  // Uncomment the line below to force error.js to appear for Exercise 6
+  // throw new Error("Failed to load menu items");
+
+  return <div>Menu Page</div>;
 }

@@ -1,16 +1,16 @@
 import "./globals.css";
-import Header from "../components/Header";
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <Header />
-        {children}
-        <footer className="site-footer">
-          <p>© 2026 Addis Eats</p>
-          <p>Delicious food from Addis Ababa.</p>
-        </footer>
+        <header className="root-header">
+          <nav>Addis Eats Header</nav>
+        </header>
+
+        <div className="root-main">{children}</div>
+
+        <footer className="root-footer">© 2026 Addis Eats Footer</footer>
       </body>
     </html>
   );

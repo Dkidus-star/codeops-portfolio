@@ -1,24 +1,24 @@
+"use client";
+import { useState } from "react";
+import Link from "next/link";
+
 export default function MenuLayout({ children }) {
+  const [count, setCount] = useState(0);
+
   return (
     <div className="menu-layout">
       <aside className="menu-sidebar">
-        <h2>Categories</h2>
-        <ul className="category-list">
-          <li>
-            <a href="/menu">All Dishes</a>
-          </li>
-          <li>
-            <a href="/menu?category=ethiopian">Ethiopian</a>
-          </li>
-          <li>
-            <a href="/menu?category=pizza">Pizza</a>
-          </li>
-          <li>
-            <a href="/menu?category=burger">Burgers</a>
-          </li>
-        </ul>
+        <h2>Menu Categories</h2>
+
+        <button onClick={() => setCount((c) => c + 1)}>Clicks: {count}</button>
+
+        <nav className="menu-nav">
+          <Link href="/menu/doro-wat">Doro Wat</Link>
+          <Link href="/menu/kitfo">Kitfo</Link>
+        </nav>
       </aside>
-      <section>{children}</section>
+
+      <main>{children}</main>
     </div>
   );
 }

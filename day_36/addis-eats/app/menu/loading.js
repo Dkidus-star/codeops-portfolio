@@ -1,3 +1,3 @@
-export default function Loading() {
-  return <h3>Loading menu items...</h3>;
+export default function MenuLoading() {
+  return <div>Loading the menu... (Throttling connection will show this)</div>;
 }
