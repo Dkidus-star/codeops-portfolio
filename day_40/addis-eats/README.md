@@ -1,7 +1,32 @@
-## API Endpoints
+# Addis Eats - Next.js App Router
 
-| Endpoint           | Method | Status Codes | Description                                                           |
-| :----------------- | :----- | :----------- | :-------------------------------------------------------------------- |
-| `/api/dishes`      | `GET`  | 200          | Returns the full menu as JSON.                                        |
-| `/api/dishes/[id]` | `GET`  | 200, 404     | Returns a specific dish, or a standard 404 error shape if unknown.    |
-| `/api/orders`      | `POST` | 201, 422     | Creates a new order; returns 422 with `fieldErrors` on invalid input. |
+A food-ordering application built with the Next.js App Router, demonstrating Server Components, Client Components, dynamic routes, and Server Actions.
+
+## Application Routes
+
+- `/` - `app/page.js`
+- `/menu` - `app/menu/page.js`
+- `/menu/[id]` - `app/menu/[id]/page.js`
+- `/cart` - `app/cart/page.js`
+- `/checkout` - `app/checkout/page.js`
+
+## Production Build Output
+
+```text
+Route (app)            Revalidate  Expire
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /api/orders
+├ ○ /cart
+├ ○ /checkout
+├ ○ /menu                      1h      1y
+└   /menu/[id]
+  ├ ● /menu/doro-wat
+  ├ ● /menu/kitfo
+  ├ ● /menu/shiro-wat
+  └ ● [+3 more paths]
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+```
