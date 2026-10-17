@@ -1,10 +1,7 @@
-# Addis Eats - Next.js App Router
+# Addis Eats
 
-A food-ordering application built with the Next.js App Router, demonstrating Server Components, Client Components, dynamic routes, and Server Actions.
+A food-ordering application built with the Next.js App Router, demonstrating Server Components, Client Components, dynamic routes, and Server Actio
 
-## Application Routes
-
-- `/` - `app/page.js`
 - `/menu` - `app/menu/page.js`
 - `/menu/[id]` - `app/menu/[id]/page.js`
 - `/cart` - `app/cart/page.js`
