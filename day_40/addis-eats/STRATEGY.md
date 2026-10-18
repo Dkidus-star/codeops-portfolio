@@ -1,26 +1,23 @@
-# Rendering Strategy
+# STRATEGY.md
 
-## /
+One line per route: the strategy, and why. Marker = what `npm run build` prints (Next.js 16: `○` static, `●` prerendered from params, `ƒ` dynamic).
 
-Static
-The home page contains mostly static content.
+| Route | Strategy | Marker | Why |
+| --- | --- | --- | --- |
+| `/` | Static | ○ | Today's specials are fixed per build; nobody in particular asks. |
+| `/menu` | ISR, `revalidate = 3600` | ○ | Dishes change a few times a day; an hour of staleness misleads nobody, speed matters most. |
+| `/menu/[id]` | Static via `generateStaticParams` | ● | Every dish id is known at build time. |
+| `/cart` | Client | ○ | Private to one browser; the page is static HTML, `CartView` renders the cart from `localStorage`. |
+| `/checkout` | Dynamic, `force-dynamic` | ƒ | Reads the session cookie (`getSession()` -> `cookies()`) and validates against live prices. |
+| `/orders` | Dynamic, `force-dynamic` | ƒ | Per-user list, depends on the cookie. |
+| `/kitchen` | ISR, `revalidate = 3600` + `revalidatePath` | ○ | Public order counter: cached for speed, refreshed the moment an order changes. |
+| `/api/dishes` | Route handler (dynamic) | ƒ | Reads `request.url` for `?category=`. For outside callers only. |
+| `/api/dishes/[id]` | Route handler (dynamic) | ƒ | Per-id lookup, honest 404. |
+| `/api/orders` | Route handler, POST | ƒ | A write; never cached. |
 
-## /menu
+## One route I changed my mind about
+`/cart` first looked like it needed `"use client"` on the whole page. Pushing the directive down into `CartView` keeps the page a server component and ships far less JavaScript.
 
-Server-rendered menu page.
-The page fetches its data directly on the server.
-
-## /menu/[id]
-
-Prerendered dynamic route.
-generateStaticParams() provides the known dish IDs.
-
-## /cart
-
-Client-side interactive UI.
-The cart contains browser-specific state.
-
-## /checkout
-
-Server-side form mutation.
-The form uses a Server Action to process the order.
+## Traps avoided
+- `Header`/`Footer`/layouts never read cookies, otherwise every route would turn dynamic.
+- Prices are never accepted from the client; `lib/orders.js` re-prices from the menu.

@@ -1,24 +1,23 @@
 import "./globals.css";
-import Providers from "./Providers";
-import Link from "next/link";
+import Providers from "@/components/Providers";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
+export const metadata = {
+  title: "Addis Eats",
+  description: "Order Ethiopian food online",
+};
+
+// Stays a SERVER component. The client Providers receive server-rendered
+// Header / page / Footer as `children`, so none of them join the client bundle.
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
+      <body className="flex min-h-screen flex-col bg-stone-50 text-stone-900">
         <Providers>
-          <header className="root-header">
-            <nav style={{ display: "flex", gap: "1rem", fontWeight: "bold" }}>
-              <Link href="/">Home</Link>
-              <Link href="/menu">Menu</Link>
-              <Link href="/cart">Cart</Link>
-              <Link href="/checkout">Checkout</Link>
-            </nav>
-          </header>
-
-          <div className="root-main">{children}</div>
-
-          <footer className="root-footer">© 2026 Addis Eats Footer</footer>
+          <Header />
+          <div className="mx-auto w-full max-w-5xl flex-1 p-6">{children}</div>
+          <Footer />
         </Providers>
       </body>
     </html>

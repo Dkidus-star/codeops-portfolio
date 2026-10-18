@@ -1,20 +1,15 @@
 "use client";
+
 import { useState } from "react";
+import CategoryBar from "./CategoryBar";
 
-export default function FilterShell({ children }) {
-  const [filter, setFilter] = useState("All");
-
+// CLIENT shell that WRAPS server content. It never imports DishList - the server renders
+// DishList first and passes the finished result in as `children`.
+export default function FilterShell({ categories, children }) {
+  const [selected, setSelected] = useState("All");
   return (
-    <div>
-      <div style={{ marginBottom: "1rem" }}>
-        <label>Filter: </label>
-        <select value={filter} onChange={(e) => setFilter(e.target.value)}>
-          <option>All</option>
-          <option>Spicy</option>
-          <option>Veggie</option>
-        </select>
-      </div>
-      {/* The server-rendered DishList will be injected here without being converted to a client component */}
+    <div data-filter={selected}>
+      <CategoryBar categories={categories} selected={selected} onSelect={setSelected} />
       {children}
     </div>
   );
