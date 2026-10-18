@@ -1,15 +1,11 @@
-import { dishes } from "@/lib/data";
+import DishCard from "@/components/DishCard";
 
-export default async function DishList() {
-  // Simulate fetch delay
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-
+// SERVER component (no directive): receives data, returns markup, ships no JavaScript.
+export default function DishList({ dishes }) {
   return (
-    <ul style={{ lineHeight: "2" }}>
-      {dishes.map((dish) => (
-        <li key={dish.id}>
-          <strong>{dish.name}</strong> - ${dish.price} ({dish.category})
-        </li>
+    <ul className="mt-4 grid gap-4 sm:grid-cols-2">
+      {dishes.map((d) => (
+        <DishCard key={d.id} dish={d} />
       ))}
     </ul>
   );

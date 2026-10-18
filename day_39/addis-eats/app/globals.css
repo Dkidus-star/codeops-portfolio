@@ -1,34 +1,14 @@
+@import "tailwindcss";
+
 body {
-  font-family: sans-serif;
-  margin: 0;
-  padding: 0;
+  font-family: Georgia, "Times New Roman", serif;
 }
 
-.root-header,
-.root-footer {
-  padding: 1rem;
-  background: #eee;
-}
-
-.root-main {
-  min-height: 80vh;
-  padding: 1rem;
-}
-
-.menu-layout {
-  display: flex;
-  gap: 2rem;
-}
-
-.menu-sidebar {
-  width: 250px;
-  border-right: 1px solid #ccc;
-  padding-right: 1rem;
-}
-
-.menu-nav {
-  margin-top: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+/* FilterShell sets data-filter on a wrapper; these rules hide non-matching server-rendered
+   cards, so filtering needs zero extra JavaScript for the list itself. */
+[data-filter="Mains"] [data-category]:not([data-category="Mains"]),
+[data-filter="Vegan"] [data-category]:not([data-category="Vegan"]),
+[data-filter="Sides"] [data-category]:not([data-category="Sides"]),
+[data-filter="Drinks"] [data-category]:not([data-category="Drinks"]) {
+  display: none;
 }

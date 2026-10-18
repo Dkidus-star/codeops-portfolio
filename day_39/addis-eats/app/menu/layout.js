@@ -1,26 +1,29 @@
 import Link from "next/link";
-import Counter from "./Counter";
-import { dishes } from "@/lib/data"; // Import your new data
+import MenuCounter from "./MenuCounter";
+import { CATEGORIES } from "@/lib/dishes";
 
+// Wraps /menu and /menu/[id]. Renders instantly (no data), so the sidebar
+// is on screen before any dish arrives.
 export default function MenuLayout({ children }) {
   return (
-    <div className="menu-layout">
-      <aside className="menu-sidebar">
-        <h2>Menu Categories</h2>
-
-        <Counter />
-
-        <nav className="menu-nav">
-          {/* Dynamically render all 6 dishes */}
-          {dishes.map((dish) => (
-            <Link key={dish.id} href={`/menu/${dish.id}`}>
-              {dish.name}
+    <div className="grid gap-8 md:grid-cols-[13rem_1fr]">
+      <aside aria-label="Menu categories">
+        <h2 className="font-bold text-green-900">Categories</h2>
+        <ul className="mt-2 space-y-1 text-sm">
+          <li>
+            <Link href="/menu" className="underline">
+              All dishes
             </Link>
+          </li>
+          {CATEGORIES.map((c) => (
+            <li key={c} className="text-stone-700">
+              {c}
+            </li>
           ))}
-        </nav>
+        </ul>
+        <MenuCounter />
       </aside>
-
-      <main>{children}</main>
+      <section>{children}</section>
     </div>
   );
 }

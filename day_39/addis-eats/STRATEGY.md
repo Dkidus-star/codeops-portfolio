@@ -1,7 +1,13 @@
-# Addis Eats Rendering Strategy
+# STRATEGY.md
 
-- **`/` (Home)**: Static - The homepage rarely changes, so static generation ensures the fastest initial load.
-- **`/menu`**: ISR (`revalidate: 3600`) - Menu availability changes occasionally; this provides static speed with fresh data hourly.
-- **`/menu/[id]`**: Static (SSG) - Using `generateStaticParams` pre-builds known dishes to serve them instantly.
-- **`/cart`**: Static - The shell is static; actual cart data will be populated client-side.
-- **`/checkout`**: Dynamic - Reading `cookies()` to check active session/cart state forces this to run on every request.
+| Route | Strategy | Why |
+| --- | --- | --- |
+| `/` | Static | Story and address never change between builds. |
+| `/menu` | ISR, 3600 s | Dishes change a few times a day. |
+| `/menu/[id]` | Static via params | Every dish is known at build time. |
+| `/cart` | Client | Private browser state. |
+| `/checkout` | Dynamic | Reads the session cookie via `getSession()` -> `cookies()`. |
+| `/orders` | Dynamic | Per-user data, cookie. |
+| `/kitchen` | ISR, `revalidate = 3600` + `revalidatePath` | Public order counter: cached for speed, refreshed the moment an order changes. |
+| `/api/dishes`, `/api/dishes/[id]` | Dynamic | Read `request.url` / vary per request. |
+| `/api/orders` | Dynamic (POST never cached) | A write. |
