@@ -1,104 +1,139 @@
-# Day 40 - Addis Eats on Next.js (foundations project)
+# Addis Eats
 
-Rebuild of the Day 35 food-ordering app with file routing, nested layouts, a deliberate rendering strategy per route, server components that fetch their own data, one route handler family and a server action.
+A food-ordering app for Ethiopian dishes, built with **Next.js 16 (App Router)**, React 19 and Tailwind CSS 4. Browse the menu, filter by category, build a cart, sign in and place an order.
 
-Deliverables in this folder: `STRATEGY.md`, `BOUNDARY.md`, this README. The capstone migration kit is in `../capstone-migration/`.
+It is a learning project: I built it to practise the Next.js App Router, and every route has a deliberate rendering strategy and every component has a deliberate place on the server or the client.
 
-## Run (production build, not dev)
+## What it demonstrates
+
+- File-based routing with nested layouts, a dynamic route (`/menu/[id]`), and `loading.js`, `error.js` and `not-found.js` states.
+- A rendering strategy chosen per route: static, ISR, prerendered from params, dynamic, and client-side state.
+- Server components that fetch their own data; `"use client"` only on the small interactive pieces.
+- A route handler API and a server action that share one zod schema for validation.
+- Authorization checked inside the server action, not only in the UI.
+- A checkout form that still works with JavaScript disabled.
+
+## Run it
+
+Requires Node.js 20.9 or newer.
 
 ```bash
 npm install
-npm run build
-npm start          # http://localhost:3000
+npm run dev                 # development
+npm run build && npm start  # production (use this to judge performance and rendering)
 ```
+
+Open http://localhost:3000. Demo sign-in users are Almaz and Dawit (a simple cookie, not real authentication).
 
 ## Routes
 
-`/`, `/menu`, `/menu/[id]`, `/cart`, `/checkout` (+ `/orders`, `/kitchen`, `/api/dishes`, `/api/dishes/[id]`, `/api/orders`). Strategy per route: `STRATEGY.md`. Component boundary: `BOUNDARY.md`.
+| Route        | Rendering                            | Why                                            |
+| ------------ | ------------------------------------ | ---------------------------------------------- |
+| `/`          | Static                               | Today's specials are fixed per build.          |
+| `/menu`      | ISR, revalidated hourly              | Dishes change a few times a day.               |
+| `/menu/[id]` | Static via `generateStaticParams`    | Every dish is known at build time.             |
+| `/cart`      | Client                               | Cart state is private to the browser.          |
+| `/checkout`  | Dynamic                              | Depends on the session cookie.                 |
+| `/orders`    | Dynamic                              | Per-user data.                                 |
+| `/kitchen`   | ISR, refreshed with `revalidatePath` | Public counter, updated when an order changes. |
 
-Folder tree (written before the code, per Part 2):
+Full reasoning for each route is in [`STRATEGY.md`](./STRATEGY.md); which components run on the server or the client, and why, is in [`BOUNDARY.md`](./BOUNDARY.md).
 
 ```
 app/
   layout.js  page.js  not-found.js  actions.js
   menu/   layout.js  page.js  loading.js  error.js  [id]/page.js
-  cart/page.js   checkout/page.js   orders/page.js   kitchen/page.js
+  cart/  checkout/  orders/  kitchen/
   api/dishes/route.js  api/dishes/[id]/route.js  api/orders/route.js
 components/  lib/  scripts/
 ```
 
-## Requirements map
+## API
 
-| Day | Where |
-| --- | --- |
-| 36 | Folder routing, `[id]`, `menu/loading.js`, `menu/error.js`, `not-found.js` |
-| 37 | `app/layout.js`, `app/menu/layout.js`, `STRATEGY.md`, `generateStaticParams`, `revalidate` |
-| 38 | `async` server pages, `FilterShell` + `children`, `Providers`, `BOUNDARY.md` |
-| 39 | `app/api/orders/route.js` + `placeOrder` server action, same `lib/schema.js` |
-| earlier | cart (`CartProvider`), form (`CheckoutForm`), guard (`/checkout` sign-in) |
+Every error uses the same shape: `{ "error": "...", "fieldErrors": { "field": ["message"] } }`.
 
-## Verify (copy these results into your submission)
+| Method and path                       | Success   | Errors                                  |
+| ------------------------------------- | --------- | --------------------------------------- |
+| `GET /api/dishes` (`?category=Vegan`) | 200 list  | 400 unknown category                    |
+| `GET /api/dishes/[id]`                | 200 dish  | 404 no such dish                        |
+| `POST /api/orders`                    | 201 order | 400 invalid JSON, 422 validation errors |
 
-**Strategy** - paste `npm run build` here and check every marker against `STRATEGY.md` (`○` static, `●` prerendered from params, `ƒ` dynamic):
+The server prices every order from its own menu; the client never sends a price. Orders are placed through the `placeOrder` server action from the checkout form; the action and the API share `lib/schema.js`.
+
+## Verification
+
+Run on the production build.
+
+**Build output**
 
 ```
-(paste the output of `npm run build` here)
+Route (app)            Revalidate  Expire
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /api/dishes
+├ ƒ /api/dishes/[id]
+├ ƒ /api/orders
+├ ○ /cart
+├ ƒ /checkout
+├ ○ /kitchen                   1h      1y
+├ ○ /menu                      1h      1y
+├   /menu/[id]
+│ ├ ● /menu/kitfo
+│ ├ ● /menu/doro-wat
+│ ├ ● /menu/tibs
+│ └ ● [+7 more paths]
+└ ƒ /orders
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
 ```
 
-**Endpoints**
+Every marker matches the strategy table above.
 
-```bash
-curl -i localhost:3000/api/dishes/not-a-dish            # 404 + { "error": ... }
-curl -i -X POST localhost:3000/api/orders \
-  -H "Content-Type: application/json" \
-  -d '{"name":"Almaz","phone":"0912"}'                   # 422 + fieldErrors.phone
+**API checks**
+
+```
+curl -i localhost:3000/api/dishes/not-a-dish
+-> 404 Not Found   {"error":"No such dish","fieldErrors":{}}
+
+curl -i -X POST localhost:3000/api/orders -H "Content-Type: application/json" -d '{"name":"Almaz","phone":"0912"}'
+-> 422 Unprocessable Entity
+   {"error":"Validation failed","fieldErrors":{"phone":["Use 09… or +2519…"],"area":["Choose a delivery area"]}}
 ```
 
-**The six failure checks** (on `npm run build && npm start`)
+**Failure checks**
 
-| Do this | Expect | Result |
-| --- | --- | --- |
-| Throttle to Slow 3G, open `/menu` | `loading.js` skeleton, header and sidebar already there | |
-| Click **Test error.js** on `/menu` | `error.js` renders, header and cart count survive | |
-| Open `/menu/not-a-dish` | `not-found.js` | |
-| Post an invalid phone at `/checkout` | 422 handled, message beside the field | |
-| Disable JavaScript, submit (pick a dish in the form, no cart) | the server action still places the order | |
-| `npm run scan` | `Clean: nothing sensitive in .next/static` | |
+| Check                                                                      | Result                  |
+| -------------------------------------------------------------------------- | ----------------------- |
+| Slow 3G on `/menu`: shell and sidebar appear first                         | Pass                    |
+| Error thrown on the menu page: `error.js` renders, header and cart survive | Pass                    |
+| `/menu/not-a-dish`: `not-found.js`                                         | Pass                    |
+| Invalid phone at checkout: message shown beside the field                  | Pass                    |
+| JavaScript disabled: the order is still placed through the server action   | Pass                    |
+| Production bundle searched for secrets (`npm run scan`)                    | Pass, nothing sensitive |
+| Signed in as another user, cancelling someone else's order                 | Refused ("Not yours")   |
 
-Also attack your own action: sign in as Almaz, place an order, sign in as Dawit, type Almaz's id into the test tool on `/orders` -> "Not yours".
+## Bundle size
 
-## Bundle comparison
+Next.js 16 no longer prints First Load JS in `npm run build`, so I measured it with `npm run first-load-js -- menu` on the running production server, which adds up every JavaScript file `/menu` downloads.
 
-`npm run build` in Next.js 16 does not print First Load JS, so measure it with the included script on the running production server:
+| Version                                              | script files | kB raw | kB gzip |
+| ---------------------------------------------------- | ------------ | ------ | ------- |
+| Server components, directives on the leaves (Day 38) | 10           | 567.7  | 175.9   |
+| Final version                                        | 9            | 566.4  | 175.3   |
 
-```bash
-npm run first-load-js -- /menu
-npm run analyze            # visual route summary (next experimental-analyze)
-```
+Most of this is the framework itself (React, the Next.js client runtime and the Turbopack runtime), which every route pays for. The app's own client code is small because only the interactive pieces are client components (`FilterShell`, `AddToCartButton`, `CartBadge`, `CartView`, the forms and the cart provider). The dish list, cards, layouts and pages are server components and ship no JavaScript.
 
-| | /menu First Load JS (kB gzip) |
-| --- | --- |
-| Day 35 (Vite, client-only) - measure the built page the same way | |
-| Day 38 (server components, directive too high) | |
-| Day 40 (final) | |
+I did not build a client-only Vite version of Addis Eats, so there is no Vite baseline here. The Vite versus Next.js comparison is done on my clinic booking project instead.
 
-## Check yourself - answers to fill in your own words
+## Limitations
 
-- Do all markers match `STRATEGY.md`?
-- How many client components, and why each? `npm run boundary` -> 10 files, justified in `BOUNDARY.md`.
-- **Which part of the application calls `/api/dishes`?** None. The pages read the data directly. The handler exists for callers outside the site (the sheet's warning: don't build an endpoint your own server components would call).
-- What did First Load JS for `/menu` do between Day 35 and today? (use the table above)
-- Does checkout work with JavaScript disabled? Yes: the form posts to the server action. With JS off the cart (browser storage) is unavailable, so the form offers a single-dish order instead.
-- Any secret in the downloaded JavaScript? `npm run scan`.
-- Does the capstone build from a fresh clone? See `../capstone-migration/`.
+- Orders are stored in memory and reset when the server restarts.
+- Sign-in is a demo cookie with two fixed users, not real authentication.
+- There is no payment integration.
+- The error button on `/menu` and the cancel-by-id box on `/orders` are demo aids for testing the error boundary and the ownership check.
 
-## 8-minute walkthrough plan
+## Notes on Next.js 16
 
-0-1 what it does and which routes exist; 1-3 live on `npm start`; 3-5 `STRATEGY.md` and one route you changed your mind about (`/cart`); 5-7 `BOUNDARY.md` and the bundle before/after; 7-8 `curl` demo and questions.
-
-## Next.js 16.4 notes
-
-- Turbopack builds everything; Node.js 20.9+ is required.
-- `params` is a Promise (`await params`) and `cookies()` is async.
-- Cache Components are intentionally **off** (`next.config.mjs`): the sheets use `revalidate`, `dynamic` and `generateStaticParams`, which Cache Components rejects. `create-next-app` 16.4 turns them on by default.
-- Commit `package-lock.json` after your first `npm install` so a fresh clone installs the same versions.
+Cache Components, the new caching model recommended in 16.4, are left off on purpose in `next.config.mjs`. This project uses the route-segment options (`revalidate`, `dynamic`, `generateStaticParams`), which Cache Components does not allow.
