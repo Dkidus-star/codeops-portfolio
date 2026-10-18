@@ -1,15 +1,15 @@
-"use client";
-import { useRouter } from "next/navigation";
+"use client"; // useRouter is a hook, so this must be a client component
+
+import { useRouter } from "next/navigation"; // never "next/router" on the app router
 
 export default function CheckoutButton() {
   const router = useRouter();
-
   return (
     <button
       onClick={() => router.push("/checkout")}
-      className="p-2 bg-blue-600 text-white rounded"
+      className="rounded bg-green-800 px-4 py-2 text-sm text-white"
     >
-      Proceed to Checkout
+      Go to checkout (router.push)
     </button>
   );
 }
