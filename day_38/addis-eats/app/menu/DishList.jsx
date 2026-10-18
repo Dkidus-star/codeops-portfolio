@@ -1,9 +1,12 @@
-export default async function DishList() {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
+import DishCard from "@/components/DishCard";
+
+// SERVER component (no directive): receives data, returns markup, ships no JavaScript.
+export default function DishList({ dishes }) {
   return (
-    <ul>
-      <li>Doro Wat</li>
-      <li>Kitfo</li>
+    <ul className="mt-4 grid gap-4 sm:grid-cols-2">
+      {dishes.map((d) => (
+        <DishCard key={d.id} dish={d} />
+      ))}
     </ul>
   );
 }
