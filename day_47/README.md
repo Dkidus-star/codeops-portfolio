@@ -1,6 +1,6 @@
-# Addis Eats — Full-Stack Next.js Food Ordering Platform (Day 46)
+# Addis Eats — Full-Stack Next.js Food Ordering Platform (Day 47)
 
-Addis Eats features accessible data representation, category revenue visualization via Recharts, URL-based server-side sorting and pagination, and an integrated full-stack ordering flow.
+Addis Eats is a production-grade full-stack Ethiopian food ordering platform built on Next.js 16 App Router (Turbopack). Day 47 introduces geospatial delivery mapping via Leaflet, real-time kitchen status broadcasts via Server-Sent Events (SSE), localized currency and time formatting via native `Intl`, and downloadable CSV transaction registries.
 
 ---
 
@@ -16,6 +16,8 @@ Route (app)
 ├ ƒ /api/dishes/[id]
 ├ ƒ /api/orders
 ├ ƒ /api/orders/[id]
+├ ƒ /api/orders/export
+├ ƒ /api/orders/stream
 ├ ƒ /cart
 ├ ƒ /checkout
 ├ ƒ /kitchen

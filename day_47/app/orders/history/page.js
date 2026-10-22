@@ -1,20 +1,10 @@
-import dynamic from "next/dynamic";
 import { AccessibleOrderTable } from "@/components/AccessibleOrderTable";
 import { SalesChart } from "@/components/SalesChart";
+import { DeliveryMapWrapper } from "@/components/DeliveryMapWrapper";
 import { getSession } from "@/lib/session";
 import { redirect } from "next/navigation";
 
-// Dynamically import DeliveryMap with SSR disabled to prevent window is not defined
-const DeliveryMap = dynamic(() => import("@/components/DeliveryMap"), {
-  ssr: false,
-  loading: () => (
-    <div className="w-full h-80 bg-slate-100 rounded-2xl flex items-center justify-center text-slate-400 text-sm">
-      Loading Delivery Zones...
-    </div>
-  ),
-});
-
-export const dynamicMode = "force-dynamic";
+export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Order History & Real-Time Dispatch | Addis Eats",
@@ -127,7 +117,7 @@ export default async function OrderHistoryPage({ searchParams }) {
             <h2 className="text-sm font-bold text-slate-900 mb-2">
               Delivery Radius (Addis Ababa)
             </h2>
-            <DeliveryMap />
+            <DeliveryMapWrapper />
           </div>
         </div>
         <div className="lg:col-span-2">
