@@ -1,13 +1,25 @@
+import dynamic from "next/dynamic";
 import { AccessibleOrderTable } from "@/components/AccessibleOrderTable";
 import { SalesChart } from "@/components/SalesChart";
 import { getSession } from "@/lib/session";
 import { redirect } from "next/navigation";
 
-export const dynamic = "force-dynamic";
+// Dynamically import DeliveryMap with SSR disabled to prevent window is not defined
+const DeliveryMap = dynamic(() => import("@/components/DeliveryMap"), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-80 bg-slate-100 rounded-2xl flex items-center justify-center text-slate-400 text-sm">
+      Loading Delivery Zones...
+    </div>
+  ),
+});
+
+export const dynamicMode = "force-dynamic";
 
 export const metadata = {
-  title: "Order History & Analytics | Addis Eats",
-  description: "View and filter past order records and category sales metrics.",
+  title: "Order History & Real-Time Dispatch | Addis Eats",
+  description:
+    "View past orders, export CSV registers, and inspect live delivery zones.",
 };
 
 export default async function OrderHistoryPage({ searchParams }) {
@@ -63,7 +75,6 @@ export default async function OrderHistoryPage({ searchParams }) {
           },
         ];
 
-  // Server-side sorting
   rawOrders.sort((a, b) => {
     let aVal = a[sort === "customer" ? "customerName" : sort] ?? "";
     let bVal = b[sort === "customer" ? "customerName" : sort] ?? "";
@@ -90,19 +101,34 @@ export default async function OrderHistoryPage({ searchParams }) {
 
   return (
     <div className="w-full px-6 lg:px-12 xl:px-16 py-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">
-          Sales Analytics & Order History
-        </h1>
-        <p className="mt-1 text-slate-600 text-sm">
-          Semantic, accessible data representation with URL-based sorting and
-          pagination.
-        </p>
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+        <div>
+          <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">
+            Order History & Delivery Dispatch
+          </h1>
+          <p className="mt-1 text-slate-600 text-sm">
+            Live delivery radius mapping, localized transaction formatting, and
+            automated data exports.
+          </p>
+        </div>
+        <a
+          href="/api/orders/export"
+          download
+          className="inline-flex items-center gap-2 px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-lg transition-colors shadow-sm w-fit"
+        >
+          <span>📥</span> Export CSV Register
+        </a>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
-        <div className="lg:col-span-1">
+        <div className="lg:col-span-1 space-y-6">
           <SalesChart data={chartData} />
+          <div>
+            <h2 className="text-sm font-bold text-slate-900 mb-2">
+              Delivery Radius (Addis Ababa)
+            </h2>
+            <DeliveryMap />
+          </div>
         </div>
         <div className="lg:col-span-2">
           <AccessibleOrderTable
