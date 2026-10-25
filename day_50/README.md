@@ -1,4 +1,4 @@
-# Addis Eats — Full-Stack Next.js 16 Capstone Platform (Day 49)
+# Addis Eats — Full-Stack Next.js 16 Capstone Platform (Day 50)
 
 Addis Eats is a production-ready Ethiopian food ordering, real-time kitchen dispatch, and sales analytics platform built with Next.js 16 App Router (Turbopack), React 19, SWR, Recharts, Leaflet, and Tailwind CSS.
 
